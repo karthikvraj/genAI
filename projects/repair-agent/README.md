@@ -1,33 +1,70 @@
 # Repair Agent
 
-**A bad plan should stop, not escalate.**
+Validate and repair plans without executing them.
 
-Karthik Coimbatore Varadaraj · v0.1.0 · Research prototype
+Karthik Coimbatore Varadaraj · v0.1.1
 
-A plausible plan can contain invented references and unauthorized actions. This project validates the plan, repairs bounded structural errors, detects repeated plans and retains a hash-linked audit trace. It has **no infrastructure executor**.
+[Lab README](../../README.md) · [Download ZIP](../../../../releases/download/reliable-ai-lab-v0.1.1/repair-agent-v0.1.1.zip)
 
-## Try it
+## What it does
 
-From the repository root, after `python -m pip install -e '.[dev]'`:
+A plan that looks plausible can contain invented references or unauthorized actions.
+
+Validate references, required fields and an action allowlist. Run a bounded repair loop, detect repeated plans and keep a hash-linked audit trace. All plans require human review.
+
+## Run
+
+From the repository root:
 
 ```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -e '.[dev]'
 python -m reliable_ai_lab demo repair-agent
 python -m reliable_ai_lab sample repair-agent --output input.json
 python -m reliable_ai_lab run repair-agent --input input.json --output result.json
+python -m reliable_ai_lab serve
 ```
 
-Input: source documents, a plan containing `hypothesis`, `source_ids`, `actions`, and `human_approval_required`, plus `max_attempts` from 1 to 5.
+On Windows, activate with `.venv\Scripts\activate`. The browser app runs at `http://127.0.0.1:8765`. Default examples need no API key or GPU; install the Python dependencies first.
 
-## Show the failure path
+## Inputs
 
-The synthetic example starts with an invented source and a restart action. It reaches `awaiting_human_review` after two attempts; **zero actions execute**. Delete the hypothesis: the default repairer stops rather than inventing missing reasoning.
+- sources: unique id/text records
+- plan: hypothesis/source_ids/actions/human_approval_required
+- max_attempts: 1..5
 
-Optional local model use is explicit: append `--ollama-model YOUR_INSTALLED_MODEL` to the `run` command. This sends evidence only to the loopback Ollama endpoint, rejects redirects, and has no remote fallback. Actual model behavior has not been validated by the offline tests.
+The `sample` command writes a valid input. See `run()` in the implementation for parameter limits. Matrices use rows for observations and columns in `feature_names` order.
 
-## Boundary
+## Try a change
 
-The default repairer is deterministic, not an LLM. Validation checks structure and references, not truth. An unkeyed hash chain detects accidental edits, not malicious rewriting or truncation.
+Delete hypothesis. The agent should stop rather than manufacture one. The optional Ollama path is explicit opt-in.
 
-[Implementation](../../reliable_ai_lab/repair_agent.py) · [Tests](../../tests/test_repair_agent.py) · [Validation](../../docs/VALIDATION.md)
+## Example results
 
-Build the independent ZIP with `python scripts/package.py`. Next work: adversarial model evaluation and authenticated audit storage. Synthetic data; AI-assisted implementation; no autonomous remediation or production validation claimed.
+Seed 7, using synthetic or hand-authored data. These results illustrate the code; they are not production benchmarks. Small numeric differences can occur across dependency versions.
+
+| Metric | Result |
+|---|---:|
+| attempts | 2 |
+| remaining_validation_errors | 0 |
+| actions_executed | 0 |
+| audit_chain_valid | True |
+
+## Code and tests
+
+[Implementation](../../reliable_ai_lab/repair_agent.py) · [Tests](../../tests/test_repair_agent.py)
+
+## Limitations
+
+- The default repairer is deterministic, not an LLM. Local Ollama is optional and opt-in.
+- Validation checks plan shape and references, not whether the hypothesis is true.
+- An unkeyed hash chain detects accidental edits, not malicious rewriting or truncation. No autonomous execution exists.
+
+## Next work
+
+Evaluate the optional local model adapter on adversarial plans. Add authenticated audit storage; do not confuse schema validation with reasoning correctness.
+
+## Data and license
+
+The examples contain no employer or customer data. The lab code is MIT-licensed; see [LICENSE](../../LICENSE) and [license scope](../../LICENSE_SCOPE.md). Check third-party data and model licenses before using them.

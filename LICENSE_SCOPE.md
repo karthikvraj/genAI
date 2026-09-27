@@ -1,3 +1,7 @@
 # License scope
 
-The MIT license applies to the new Reliable AI Lab source, tests, synthetic examples, documentation and packaging files. It does not change the license or ownership of any pre-existing notebooks, PDFs, third-party libraries, models, or datasets. No pre-existing facial-emotion-detection artifacts are included in the standalone lab downloads.
+The MIT license covers Reliable AI Lab source code, tests, synthetic examples, documentation and packaging scripts.
+
+Files under `legacy/` retain their existing licensing and ownership terms. Moving them does not relicense them. They are excluded from the lab downloads.
+
+Third-party libraries, models and datasets retain their own licenses.

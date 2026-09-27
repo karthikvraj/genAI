@@ -1,31 +1,25 @@
-# Launch kit
+# Launch notes
 
-## Portfolio introduction
+## Project introduction
 
-I care less about an AI system sounding confident and more about what happens when it is wrong.
+I've published Reliable AI Lab, a collection of ten Python projects covering output checks, retrieval, agent plans and infrastructure reliability.
 
-Reliable AI Lab is a set of ten small, inspectable projects around that problem: evidence checks, bounded agent behavior, retrieval budgets, GPU telemetry, inference capacity, evaluation and drift.
+The focus is what happens when something goes wrong. An answer changes a number in its source. A plan includes an action that should not run. A service loses capacity. A dataset shifts.
 
-Each project has runnable code, a seeded example, tests, and explicit limitations. Default demos run locally without a paid model API. The sample data is synthetic; I am not presenting it as production validation.
+Each project has code, tests and an example you can run locally. The examples use synthetic data, and the default demos do not need an API key or GPU.
 
-Start with Evidence Gate, Repair Agent, or Inference Twin. Change an input, inspect the output, and share a counterexample.
+Start with Evidence Gate, Repair Agent or Inference Twin. Try a different input and let me know where the result falls short.
 
-## Three distinct demo stories
+## Demo notes
 
-**Evidence Gate:** An answer cites the right document but changes 60 seconds to 600 seconds. Show the exact quote and the numeric-review flag. Also show a paraphrase or entity substitution the lexical checker cannot reliably judge. The point is inspectable screening, not a universal hallucination detector.
+**Evidence Gate:** Change a number in a cited claim. Show the flag and the source excerpt. Also show a paraphrase the lexical checks do not handle well.
 
-**Repair Agent:** Start with a plan containing an invented reference and an unauthorized restart action. Show validation errors, the bounded repair, and the final human-review state. Delete the hypothesis to show that the default repairer stops rather than inventing reasoning.
+**Repair Agent:** Use a plan with an invalid reference and a blocked restart action. Show the validation errors, repair attempts and final review state. Remove the hypothesis to show the stop condition.
 
-**Inference Twin:** Compare eight servers with a loss of three under the same synthetic arrival stream. Explain offered utilization, finite-window latency and why an overloaded queue has no steady state. Show the held-out surrogate error, not a claim about a particular GPU product.
+**Inference Twin:** Compare eight servers with a loss of three. Explain the load assumptions, queue growth and prediction error. These are simulated cases, not measurements from a deployed service.
 
-## Suggested distribution
+## Posting
 
-Lead with one reproducible problem and one short screen recording, not a ten-project announcement with ten unsupported superlatives. Use the relevant engineering community's self-promotion rules. Answer technical questions with code, examples and limitations. Invite counterexamples and contributions rather than asking for automatic stars.
+Lead with one example and a short screen recording. Link to the project code and include the limitation that matters for that example. Follow each community's posting rules.
 
-## Measurement
-
-Track actual GitHub traffic, external referrals, release asset downloads, reproducible bug reports and meaningful contributions. Keep source-archive downloads separate from release-asset download counts. Record the observation window and source of every number. There is no guarantee of traffic, stars or virality.
-
-## Publishing sequence
-
-These are communication themes, not instructions to fabricate development history. The code can be published together. Feature different projects only when there is a real demonstration or improvement to discuss.
+Track actual referrals, release downloads, reproducible issues and contributions. Record the date range for any number you share. Use updates to describe work that has actually changed.

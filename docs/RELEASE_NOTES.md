@@ -1,11 +1,14 @@
-# Reliable AI Lab v0.1.0
+# Reliable AI Lab v0.1.1
 
-Ten independent AI/ML reliability prototypes by Karthik Coimbatore Varadaraj.
+Documentation and packaging update. Project algorithms are unchanged.
 
-Includes ten project ZIPs, a full lab source bundle, a Python wheel, a read-only HTML gallery, and SHA-256 checksums. Each standalone ZIP contains its implementation, tests, documentation and a seeded synthetic example.
+- Rewrote the main README, project pages and demo text.
+- Moved the four earlier facial-emotion notebooks and PDFs under `legacy/facial-emotion-detection/` without changing their contents.
+- Used relative repository links and removed the fixed release tag from the workflow and archive checker.
+- Added checksum verification to the extracted-package tests.
 
-Run `python -m pip install -e '.[dev]'`, then `python -m reliable_ai_lab serve` from an extracted project directory. Default demos need no API key or GPU. The HTML gallery replays recorded results; it does not compute new predictions.
+The release includes ten project ZIPs, the full source bundle, a Python wheel, the recorded HTML gallery and SHA-256 checksums. The workflow tests the main suite and each extracted project before publishing.
 
-The repository workflow tests the suite and every extracted project before publishing these assets. See the Actions run for the exact Python versions and result logs.
+The previous v0.1.0 release is retained. This release does not complete the repository-name change; that requires the owner's GitHub Settings page.
 
-This is a research preview, not a production deployment. Synthetic results do not establish real-world performance. Optional Ollama model execution is not validated by the deterministic offline tests. Existing facial-emotion notebooks and PDFs are not part of these downloads.
+The examples use synthetic data. The HTML gallery shows saved results; run `python -m reliable_ai_lab serve` for editable inputs and fresh results. Optional Ollama inference is not covered by the default tests.

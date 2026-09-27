@@ -36,7 +36,7 @@ def test_no_arbitrary_file_access(port,path):
 
 def test_homepage_and_security_headers(port):
     status,body=request(port,'GET','/')
-    assert status==200 and b'Ship AI.' in body and b'<textarea' in body
+    assert status==200 and b'<h1>Reliable AI Lab' in body and b'<textarea' in body
 
 def test_missing_request_header(port):
     assert request(port,'POST','/api/run/evidence-gate','{}',{'Content-Type':'application/json'})[0]==403

@@ -1,31 +1,73 @@
 # Budget RAG
 
-**Useful context. A hard budget.**
+Select context within a word budget.
 
-Karthik Coimbatore Varadaraj · v0.1.0 · Research prototype
+Karthik Coimbatore Varadaraj · v0.1.1
 
-Fixed-top-k retrieval can exceed a context budget and repeat the same information. Budget RAG combines TF-IDF relevance, a diversity penalty and a length-aware greedy selector. It exposes selected excerpts alongside a fixed-top-three baseline.
+[Lab README](../../README.md) · [Download ZIP](../../../../releases/download/reliable-ai-lab-v0.1.1/budget-rag-v0.1.1.zip)
 
-## Try it
+## What it does
 
-From the repository root, after `python -m pip install -e '.[dev]'`:
+A fixed number of retrieved chunks can exceed a context budget or repeat the same information.
+
+Use TF-IDF relevance, diversity penalties and a length-aware greedy selector. Compare its word count with a fixed-top-three retrieval baseline.
+
+## Run
+
+From the repository root:
 
 ```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -e '.[dev]'
 python -m reliable_ai_lab demo budget-rag
 python -m reliable_ai_lab sample budget-rag --output input.json
 python -m reliable_ai_lab run budget-rag --input input.json --output result.json
+python -m reliable_ai_lab serve
 ```
 
-Input: unique `documents`, a `query`, a positive `word_budget`, and optional labeled `expected_source_ids`.
+On Windows, activate with `.venv\Scripts\activate`. The browser app runs at `http://127.0.0.1:8765`. Default examples need no API key or GPU; install the Python dependencies first.
 
-## Inspect the tradeoff
+## Inputs
 
-The seed-7 sample selects 22 words under a 38-word limit and retrieves both labeled source IDs. Reduce the limit to **15 words**: the selected context remains within budget while the fixed-top-three baseline exceeds it. An unrelated question produces abstention.
+- documents: unique id/text records
+- query: nonempty question
+- word_budget: positive whitespace-word limit
+- expected_source_ids: optional labeled source set
 
-## Boundary
+The `sample` command writes a valid input. See `run()` in the implementation for parameter limits. Matrices use rows for observations and columns in `feature_names` order.
 
-The limit counts whitespace-delimited excerpt words, not model tokens or citation prefixes. Retrieval is lexical; there is no answer generator. Greedy selection is not guaranteed optimal. Smaller context alone does not prove lower actual token cost or better answer quality.
+## Try a change
 
-[Implementation](../../reliable_ai_lab/budget_rag.py) · [Tests](../../tests/test_budget_rag.py) · [Validation](../../docs/VALIDATION.md)
+Reduce word_budget from 38 to 15. Compare selected_words with fixed_top3_words.
 
-Build an independent ZIP with `python scripts/package.py`; use `python -m reliable_ai_lab serve` for the local playground. Next work: tokenizer-aware budgets, dense retrieval, held-out answer quality and latency evaluation. Synthetic data; AI-assisted implementation; no production validation claimed.
+## Example results
+
+Seed 7, using synthetic or hand-authored data. These results illustrate the code; they are not production benchmarks. Small numeric differences can occur across dependency versions.
+
+| Metric | Result |
+|---|---:|
+| selected_words | 22 |
+| word_budget | 38 |
+| selected_chunks | 3 |
+| fixed_top3_words | 22 |
+| fixed_top3_over_budget | False |
+| source_recall | 1 |
+
+## Code and tests
+
+[Implementation](../../reliable_ai_lab/budget_rag.py) · [Tests](../../tests/test_budget_rag.py)
+
+## Limitations
+
+- The budget counts whitespace-delimited words in excerpts, not model tokens or citation prefixes.
+- TF-IDF retrieval is lexical, not dense semantic search. No answer generation is performed.
+- The greedy objective does not guarantee optimal retrieval or improved answer quality.
+
+## Next work
+
+Add tokenizer-specific budgets, dense retrieval and answer-quality evaluation before claiming context or cost improvements.
+
+## Data and license
+
+The examples contain no employer or customer data. The lab code is MIT-licensed; see [LICENSE](../../LICENSE) and [license scope](../../LICENSE_SCOPE.md). Check third-party data and model licenses before using them.

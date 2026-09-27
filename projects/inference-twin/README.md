@@ -1,33 +1,72 @@
 # Inference Twin
 
-**Lose capacity in a simulator, not in production.**
+Simulate queue behavior after server loss.
 
-Karthik Coimbatore Varadaraj · v0.1.0 · Research prototype
+Karthik Coimbatore Varadaraj · v0.1.1
 
-Explore how capacity loss changes waiting time, then inspect a learned latency surrogate against a held-out baseline. The simulator uses Poisson arrivals, exponential service, identical servers and one FIFO queue. A random forest learns from independent simulated operating points.
+[Lab README](../../README.md) · [Download ZIP](../../../../releases/download/reliable-ai-lab-v0.1.1/inference-twin-v0.1.1.zip)
 
-## Try it
+## What it does
 
-From the repository root, after `python -m pip install -e '.[dev]'`:
+Capacity loss can push a service from manageable waiting time into an unstable queue.
+
+Simulate Poisson arrivals and exponential service on identical servers. Train a random-forest latency surrogate on independent simulated operating points and report held-out MAE against a constant predictor.
+
+## Run
+
+From the repository root:
 
 ```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -e '.[dev]'
 python -m reliable_ai_lab demo inference-twin
 python -m reliable_ai_lab sample inference-twin --output input.json
 python -m reliable_ai_lab run inference-twin --input input.json --output result.json
+python -m reliable_ai_lab serve
 ```
 
-Input: `arrival_rps`, mean `service_ms`, `servers`, `lost_servers`, `requests` and `seed`.
+On Windows, activate with `.venv\Scripts\activate`. The browser app runs at `http://127.0.0.1:8765`. Default examples need no API key or GPU; install the Python dependencies first.
 
-## Reproduced synthetic result
+## Inputs
 
-Seed 7 uses 120 simulated training points and 40 holdout points. Surrogate holdout MAE is approximately **23.08 ms**, versus **93.45 ms** for a constant training-mean predictor. This is a result on this simulator, not measured GPU performance.
+- arrival_rps: positive arrival rate
+- service_ms: mean service time in milliseconds
+- servers and lost_servers: integer capacity
+- requests and seed: finite simulation controls
 
-The default scenario loses three of eight servers. Check `offered_utilization` and `steady_state_possible` before interpreting latency. Set `lost_servers` to zero to reproduce identical scenarios.
+The `sample` command writes a valid input. See `run()` in the implementation for parameter limits. Matrices use rows for observations and columns in `feature_names` order.
 
-## Boundary
+## Try a change
 
-Not a calibrated hardware digital twin. No batching, prefill/decode separation, memory limits or network simulation. Utilization at or above one has no steady state; finite-window p95 is illustrative. Surrogate predictions are withheld outside its sampled parameter bounds.
+Change lost_servers from 3 to 0. Read offered_utilization and steady_state_possible before interpreting p95 latency.
 
-[Implementation](../../reliable_ai_lab/inference_twin.py) · [Tests](../../tests/test_inference_twin.py) · [Validation](../../docs/VALIDATION.md)
+## Example results
 
-Build the independent ZIP with `python scripts/package.py`. Next work: real approved traces, repeated-simulation intervals and inference-engine-specific calibration. Synthetic data; AI-assisted implementation.
+Seed 7, using synthetic or hand-authored data. These results illustrate the code; they are not production benchmarks. Small numeric differences can occur across dependency versions.
+
+| Metric | Result |
+|---|---:|
+| synthetic_holdout_mae_ms | 23.0823 |
+| constant_baseline_mae_ms | 93.4542 |
+| holdout_points | 40 |
+| training_points | 120 |
+| failure_latency_multiplier | 17.3055 |
+
+## Code and tests
+
+[Implementation](../../reliable_ai_lab/inference_twin.py) · [Tests](../../tests/test_inference_twin.py)
+
+## Limitations
+
+- Not a calibrated digital twin of hardware or an inference engine.
+- At utilization >=1 there is no steady state; finite-window latency is illustrative only.
+- The random forest learns from this simulator, not real hardware. Surrogate estimates are withheld outside its sampled parameter bounds.
+
+## Next work
+
+Calibrate to measured inference traces, batching and prefill/decode behavior; add repeated simulation intervals and out-of-distribution checks.
+
+## Data and license
+
+The examples contain no employer or customer data. The lab code is MIT-licensed; see [LICENSE](../../LICENSE) and [license scope](../../LICENSE_SCOPE.md). Check third-party data and model licenses before using them.

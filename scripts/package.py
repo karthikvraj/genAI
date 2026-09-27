@@ -76,28 +76,38 @@ def dump(path, value):
 
 
 def readme(name, result, standalone=False):
-    meta=PROJECTS[name];problem,method,roadmap,inputs,experiment=DETAILS[name]
-    prefix='' if standalone else '../../'
-    fields='\n'.join('- '+value for value in inputs)
-    limitations='\n'.join('- '+value for value in result['limitations'])
-    metrics='\n'.join(f'| {k} | {v:.6g} |' if isinstance(v,float) else f'| {k} | {v} |' for k,v in result['metrics'].items())
+    meta = PROJECTS[name]
+    problem, method, roadmap, inputs, experiment = DETAILS[name]
+    prefix = '' if standalone else '../../'
+    fields = '\n'.join('- ' + value for value in inputs)
+    limitations = '\n'.join('- ' + value for value in result['limitations'])
+    metrics = '\n'.join(
+        f'| {key} | {value:.6g} |' if isinstance(value, float)
+        else f'| {key} | {value} |'
+        for key, value in result['metrics'].items()
+    )
+    links = '' if standalone else (
+        f'[Lab README](../../README.md) · '
+        f'[Download ZIP](../../../../releases/download/reliable-ai-lab-v{__version__}/'
+        f'{name}-v{__version__}.zip)\n'
+    )
+    location = 'From the extracted project directory:' if standalone else 'From the repository root:'
     return f'''# {meta['title']}
 
-**{meta['tagline']}**
+{meta['tagline']}
 
-Independent engineering by **Karthik Coimbatore Varadaraj** · v{__version__} · Research prototype
+Karthik Coimbatore Varadaraj · v{__version__}
 
-## The problem
+{links}
+## What it does
 
 {problem}
 
-## What is implemented
-
 {method}
 
-## Run it
+## Run
 
-{'From this extracted project directory:' if standalone else 'From the repository root:'}
+{location}
 
 ```bash
 python -m venv .venv
@@ -109,49 +119,41 @@ python -m reliable_ai_lab run {name} --input input.json --output result.json
 python -m reliable_ai_lab serve
 ```
 
-On Windows, activate with `.venv\\Scripts\\activate`. Open `http://127.0.0.1:8765` for the local browser playground. It is not a hosted public demo. Default execution needs no API key and makes no model-provider call. Installation still requires dependencies unless already available.
+On Windows, activate with `.venv\\Scripts\\activate`. The browser app runs at `http://127.0.0.1:8765`. Default examples need no API key or GPU; install the Python dependencies first.
 
-## Input contract
+## Inputs
 
 {fields}
 
-The `sample` command produces a complete valid input. Read the module's `run()` function for validation limits and optional parameters. Numeric matrices use rows for observations and columns in `feature_names` order.
+The `sample` command writes a valid input. See `run()` in the implementation for parameter limits. Matrices use rows for observations and columns in `feature_names` order.
 
-## Inspect the behavior
+## Try a change
 
 {experiment}
 
-## Reproduced sample results
+## Example results
 
-Seed **7**. All sample data is synthetic or hand-authored for this project. These results demonstrate the implementation, not superiority on a public benchmark or readiness for production.
+Seed 7, using synthetic or hand-authored data. These results illustrate the code; they are not production benchmarks. Small numeric differences can occur across dependency versions.
 
-| Metric | Sample result |
+| Metric | Result |
 |---|---:|
 {metrics}
 
-## Architecture
+## Code and tests
 
-```mermaid
-flowchart LR
-    A[Validated JSON input] --> B[Reference data or source corpus]
-    B --> C[{' / '.join(meta['method'].split(';'))}]
-    C --> D[Structured results and evidence]
-    D --> E[Human inspection]
-```
+[Implementation]({prefix}reliable_ai_lab/{meta['module']}.py) · [Tests]({prefix}tests/test_{meta['module']}.py)
 
-Implementation: [`reliable_ai_lab/{meta['module']}.py`]({prefix}reliable_ai_lab/{meta['module']}.py). Tests: [`tests/test_{meta['module']}.py`]({prefix}tests/test_{meta['module']}.py).
-
-## Known limits
+## Limitations
 
 {limitations}
 
-## Next engineering work
+## Next work
 
 {roadmap}
 
-## Data, authorship and use
+## Data and license
 
-Examples contain no employer or customer data. Implementation was developed with AI assistance. No historical deployment, adoption, impact, novel algorithm, or independent validation is claimed. MIT license applies to the new lab code; see LICENSE and LICENSE_SCOPE.md. Review any data and model licenses separately when extending the project.
+The examples contain no employer or customer data. The lab code is MIT-licensed; see [LICENSE]({prefix}LICENSE) and [license scope]({prefix}LICENSE_SCOPE.md). Check third-party data and model licenses before using them.
 '''
 
 
@@ -190,7 +192,7 @@ def build(out=None):
             registry=registry[:start]+'PROJECTS = '+repr({name:meta})+registry[end:]
             (package/'registry.py').write_text(registry)
             shutil.copytree(ROOT/'reliable_ai_lab/web',package/'web')
-            page=package/'web/index.html';page.write_text(page.read_text().replace('Ten focused experiments in evidence, agents and infrastructure reliability.',meta['title']+': a focused experiment in AI reliability.'))
+            page=package/'web/index.html';page.write_text(page.read_text().replace('Ten projects covering model outputs, retrieval and infrastructure behavior.',meta['title']+': '+meta['tagline']))
             config=(ROOT/'pyproject.toml').read_text().replace('name = "kv-reliable-ai-lab"',f'name = "kv-{name}"')
             (stage/'pyproject.toml').write_text(config)
             (stage/'README.md').write_text(readme(name,results[name],True))
@@ -207,8 +209,8 @@ def build(out=None):
     page=page.replace('01 / editable input · JSON','01 / recorded input · JSON').replace('Ready. Run the example or edit the JSON.','Ready. Replay this recorded sample.')
     page=page.replace('<textarea id="input"','<textarea readonly id="input"')
     page=page.replace('Inputs stay with this local Python process. Use approved, non-sensitive data.','Read-only sample. Run the Python playground to edit inputs and compute new results.')
-    page=page.replace('Change an input. Inspect the result. See the limits.','Replay computed sample outputs. Run the Python package to try your own inputs.')
-    page=page.replace('Seeded synthetic examples. No API key for the default demos. No production actions.','Recorded outputs from seeded Python runs. This HTML preview does not execute a model or simulation.')
+    page=page.replace('Edit the JSON, run the project and review the result.','Recorded results. Run the Python package to use your own inputs.')
+    page=page.replace('Synthetic data. Default runs need no API key or GPU and make no infrastructure changes.','Saved outputs from synthetic examples. This gallery does not run Python or a model.')
     old="async function request(url,options){let r=await fetch(url,options);let d=await r.json();if(!r.ok)throw Error(d.error||'Request failed');return d}"
     data=json.dumps({'projects':PROJECTS,'inputs':inputs,'results':results},separators=(',',':'),allow_nan=False).replace('<','\\u003c')
     new='const RECORDED='+data+";async function request(url,options){if(url==='/api/projects')return RECORDED.projects;let name=url.split('/').pop();return url.startsWith('/api/sample/')?RECORDED.inputs[name]:RECORDED.results[name]}"
@@ -217,7 +219,7 @@ def build(out=None):
     (out/'reliable-ai-lab-demo-gallery.html').write_text(page,encoding='utf-8');artifacts.append(out/'reliable-ai-lab-demo-gallery.html')
     master=out/f'reliable-ai-lab-v{__version__}.zip'
     zip_directory(ROOT,master,f'reliable-ai-lab-v{__version__}');artifacts.append(master)
-    artifacts.extend(sorted(out.glob('*.whl')))
+    artifacts.extend(sorted(out.glob(f'*-{__version__}-*.whl')))
     manifest={'version':__version__,'synthetic_demo_seed':7,'environment':env,'artifacts':[]}
     for path in artifacts:
         manifest['artifacts'].append({'file':path.name,'bytes':path.stat().st_size,'sha256':hashlib.sha256(path.read_bytes()).hexdigest()})

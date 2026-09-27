@@ -1,33 +1,76 @@
 # GPU Guard
 
-**Find the unusual. Keep the uncertainty.**
+Detect telemetry anomalies against a reference set.
 
-Karthik Coimbatore Varadaraj · v0.1.0 · Research prototype
+Karthik Coimbatore Varadaraj · v0.1.1
 
-An alert needs a healthy reference, an explicit threshold and visible false positives. GPU Guard fits Isolation Forest on a reference subset, calibrates anomaly-score ranks on a separate subset, and reports large robust metric deviations.
+[Lab README](../../README.md) · [Download ZIP](../../../../releases/download/reliable-ai-lab-v0.1.1/gpu-guard-v0.1.1.zip)
 
-## Try it
+## What it does
 
-From the repository root, after `python -m pip install -e '.[dev]'`:
+A useful GPU alert needs a healthy reference, a defensible threshold, and visible false positives.
+
+Split reference data into fitting and calibration sets. Fit Isolation Forest, compute rank-based anomaly p-values, and report large robust metric deviations. Optional labels are used only for evaluation.
+
+## Run
+
+From the repository root:
 
 ```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -e '.[dev]'
 python -m reliable_ai_lab demo gpu-guard
 python -m reliable_ai_lab sample gpu-guard --output input.json
 python -m reliable_ai_lab run gpu-guard --input input.json --output result.json
+python -m reliable_ai_lab serve
 ```
 
-Input: `reference` and `current` matrices, ordered `feature_names`, per-sample `alpha`, and optional binary `labels` used only for evaluation.
+On Windows, activate with `.venv\Scripts\activate`. The browser app runs at `http://127.0.0.1:8765`. Default examples need no API key or GPU; install the Python dependencies first.
 
-## Keep the false positives visible
+## Inputs
 
-The seed-7 fixture has 500 reference rows, split into 300 training and 200 calibration rows. Of 100 current rows, 20 are injected anomalies. The detector flags 30 rows: **20 true positives and 10 false positives**, precision 0.667, recall 1.0 and F1 0.8. This intentionally simple synthetic result is not production accuracy.
+- reference and current: matching numeric matrices
+- feature_names: unique ordered metric names
+- alpha: per-sample rank threshold
+- labels: optional binary current-window labels
 
-Set alpha to 0.001. With 200 calibration rows the smallest attainable rank p-value is 1/201, so no sample can pass that threshold.
+The `sample` command writes a valid input. See `run()` in the implementation for parameter limits. Matrices use rows for observations and columns in `feature_names` order.
 
-## Boundary
+## Try a change
 
-Rank calibration assumes exchangeability. Time dependence and drift can invalidate it. Alpha is per-sample, not a fleet-wide false-alert guarantee. Metric deviations are observations, not causal attribution. No GPU driver or telemetry collector is included.
+Set alpha to 0.001. The sample calibration set cannot attain that significance level, and no row should be flagged.
 
-[Implementation](../../reliable_ai_lab/gpu_guard.py) · [Tests](../../tests/test_gpu_guard.py) · [Validation](../../docs/VALIDATION.md)
+## Example results
 
-Build the standalone ZIP with `python scripts/package.py`. Next work: time-aware calibration, approved telemetry and alert-budget evaluation. AI-assisted implementation.
+Seed 7, using synthetic or hand-authored data. These results illustrate the code; they are not production benchmarks. Small numeric differences can occur across dependency versions.
+
+| Metric | Result |
+|---|---:|
+| flagged_rows | 30 |
+| current_rows | 100 |
+| flagged_fraction | 0.3 |
+| training_rows | 300 |
+| calibration_rows | 200 |
+| minimum_attainable_p_value | 0.00497512 |
+| precision | 0.666667 |
+| recall | 1 |
+| f1 | 0.8 |
+
+## Code and tests
+
+[Implementation](../../reliable_ai_lab/gpu_guard.py) · [Tests](../../tests/test_gpu_guard.py)
+
+## Limitations
+
+- Rank calibration assumes exchangeable healthy reference and future healthy samples; telemetry autocorrelation or drift can invalidate it.
+- The alpha setting is per-sample, not a fleet-wide false-alert guarantee.
+- Largest deviations explain observed metrics, not causal attribution. No GPU driver access or production telemetry collector is included.
+
+## Next work
+
+Use real approved telemetry, temporally aware calibration and fleet-wide alert budgeting. Validate GPU-specific failure modes.
+
+## Data and license
+
+The examples contain no employer or customer data. The lab code is MIT-licensed; see [LICENSE](../../LICENSE) and [license scope](../../LICENSE_SCOPE.md). Check third-party data and model licenses before using them.

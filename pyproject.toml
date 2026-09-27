@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "kv-reliable-ai-lab"
-version = "0.1.0"
-description = "Ten local-first, reproducible AI reliability experiments"
+version = "0.1.1"
+description = "Python projects for model evaluation, agent validation and infrastructure reliability"
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [{name = "Karthik Coimbatore Varadaraj"}]

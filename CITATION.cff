@@ -1,7 +1,7 @@
 cff-version: 1.2.0
-message: "Cite the specific software version and distinguish synthetic demonstrations from independent validation."
-title: "Reliable AI Lab: Ten Reproducible AI Reliability Experiments"
-version: 0.1.0
+message: "Please cite the software version used in your work."
+title: "Reliable AI Lab"
+version: 0.1.1
 type: software
 authors:
   - family-names: "Coimbatore Varadaraj"

@@ -1,31 +1,74 @@
 # EvalForge
 
-**A better answer needs a better test.**
+Compare saved answers and confidence scores.
 
-Karthik Coimbatore Varadaraj · v0.1.0 · Research prototype
+Karthik Coimbatore Varadaraj · v0.1.1
 
-Evaluate saved answers with an explicit paired baseline, confidence diagnostics, uncertainty intervals and abstention tradeoffs. Includes normalized exact match, token F1, Brier score, ten-bin calibration error, risk/coverage, per-group results and paired bootstrap intervals.
+[Lab README](../../README.md) · [Download ZIP](../../../../releases/download/reliable-ai-lab-v0.1.1/evalforge-v0.1.1.zip)
 
-## Try it
+## What it does
 
-From the repository root, after `python -m pip install -e '.[dev]'`:
+A model comparison can hide uncertainty, confidence errors and the cost of abstaining.
+
+Evaluate saved answers with normalized exact match and token F1. Compute Brier score, ten-bin calibration error, risk/coverage and paired bootstrap intervals. Preserve per-group results.
+
+## Run
+
+From the repository root:
 
 ```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -e '.[dev]'
 python -m reliable_ai_lab demo evalforge
 python -m reliable_ai_lab sample evalforge --output input.json
 python -m reliable_ai_lab run evalforge --input input.json --output result.json
+python -m reliable_ai_lab serve
 ```
 
-Input: records with unique `id`, `reference`, `answer`, and `confidence`. `baseline_answer` must appear on all records or none. Latency, cost and groups are optional caller-supplied data.
+On Windows, activate with `.venv\Scripts\activate`. The browser app runs at `http://127.0.0.1:8765`. Default examples need no API key or GPU; install the Python dependencies first.
 
-## Inspect the metric, not the headline
+## Inputs
 
-Eight hand-authored examples produce exact match 0.625. This is an API demonstration, not an evaluation of a named model. Change the confidence on a wrong answer and inspect Brier score and calibration. At thresholds accepting no answers, error rate is null—not a fabricated zero-error result.
+- records: unique id/reference/answer/confidence records
+- baseline_answer: present on all rows or none
+- latency_ms and cost_usd: caller-supplied measurements
+- group: optional evaluation slice
 
-## Boundary
+The `sample` command writes a valid input. See `run()` in the implementation for parameter limits. Matrices use rows for observations and columns in `feature_names` order.
 
-Exact match and token overlap are not semantic factuality metrics. Confidence, cost and latency are supplied by the caller, not independently measured here. Paired bootstrap assumes independent examples; tiny synthetic sets cannot establish superiority.
+## Try a change
 
-[Implementation](../../reliable_ai_lab/evalforge.py) · [Tests](../../tests/test_evalforge.py) · [Validation](../../docs/VALIDATION.md)
+Change an incorrect answer with high confidence. Watch calibration and Brier score rather than just aggregate accuracy.
 
-Build the independent ZIP with `python scripts/package.py`. Next work: independently labeled semantic evaluation, clustered bootstrap and held-out threshold selection. No answer generator or paid model API is required. AI-assisted implementation.
+## Example results
+
+Seed 7, using synthetic or hand-authored data. These results illustrate the code; they are not production benchmarks. Small numeric differences can occur across dependency versions.
+
+| Metric | Result |
+|---|---:|
+| examples | 8 |
+| exact_match | 0.625 |
+| mean_token_f1 | 0.854167 |
+| brier_score | 0.176175 |
+| ece_10_bins | 0.3225 |
+| p95_latency_ms | 213.05 |
+| total_cost_usd | 0.0008 |
+
+## Code and tests
+
+[Implementation](../../reliable_ai_lab/evalforge.py) · [Tests](../../tests/test_evalforge.py)
+
+## Limitations
+
+- Exact match and token overlap do not measure semantic correctness, harmlessness, or factuality.
+- Confidence and cost are supplied by the caller; this tool does not infer or verify them.
+- Bootstrap intervals assume independent paired examples. Small synthetic examples cannot establish real-world superiority.
+
+## Next work
+
+Add independently labeled semantic evaluation, clustered bootstrap for related prompts and held-out threshold selection.
+
+## Data and license
+
+The examples contain no employer or customer data. The lab code is MIT-licensed; see [LICENSE](../../LICENSE) and [license scope](../../LICENSE_SCOPE.md). Check third-party data and model licenses before using them.

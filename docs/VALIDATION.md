@@ -1,14 +1,26 @@
-# Validation record
+# Validation
 
-Initial local validation, September 26, 2026 (America/New_York).
+## Version 0.1.1
 
-- Main suite: **142 tests passed**.
-- All ten seeded demos completed and returned JSON-serializable results without mutating inputs.
-- All ten extracted ZIP packages passed their own tests in separate temporary directories: Evidence Gate 51; Budget RAG 51; Repair Agent 53; Incident Room 46; Inference Twin 51; GPU Guard 47; EvalForge 51; Research Lens 46; Topology RCA 48; Drift Radar 49. Shared tests are repeated in these totals, not additional unique tests.
-- The recorded HTML gallery rendered all ten project views in Chromium with no JavaScript errors. Desktop width 1440 and mobile width 390 were inspected; no horizontal overflow was found at mobile width.
-- Live browser navigation to localhost was blocked by the execution environment's browser policy. Local HTTP endpoints were exercised separately by Python integration tests. This is not a full end-to-end live-browser validation.
-- Wheel build succeeded. Installing dependencies from the internet and optional local-model inference were not tested in this network-restricted environment.
+This update changes documentation, repository layout and release packaging. It does not change the ten project algorithms.
 
-Full local logs are included in the downloadable lab under docs/. Reproduce with `python -m pytest --junitxml=docs/test-results.xml`, `python scripts/package.py`, and `python scripts/check_downloads.py`. GitHub Actions results, when present, are separate evidence of the remote run.
+The workflow tests Python 3.10 and 3.12. It runs the main suite, builds the wheel and checks every extracted project ZIP before publishing. Read the [Actions results](../../../actions/workflows/reliable-ai-lab.yml) for the outcome of each run. Downloadable logs identify their Python and dependency versions.
 
-These tests establish specific software behaviors, not production safety, model generalization, adoption, originality of algorithms, or independence from AI assistance.
+```bash
+python -m pytest --junitxml=docs/test-results.xml
+python -m build --wheel
+python scripts/package.py
+python scripts/check_downloads.py
+```
+
+The archive check verifies checksums, tests each project in a separate temporary directory, and confirms that all ten expected packages are present. Shared tests run again in each package; those totals are not additional unique tests.
+
+## Initial version 0.1.0
+
+The initial local suite passed 142 tests. All ten extracted project ZIPs passed their tests. GitHub verification also passed on Python 3.10 and 3.12 in [run 36283821103](../../../actions/runs/36283821103).
+
+The initial recorded HTML gallery was checked at desktop width 1440 and mobile width 390. That check found no JavaScript errors or mobile horizontal overflow. Live browser navigation to localhost was blocked in that environment; HTTP endpoints were tested separately. The earlier browser check is not a new browser test for v0.1.1.
+
+## Limits
+
+The tests cover input validation, output structure, evidence references, budget bounds, calibration splits, stop conditions, CLI behavior and local HTTP restrictions. They do not establish production safety or performance on independent data. Optional Ollama inference requires separate testing.

@@ -1,18 +1,28 @@
 # Reliable AI Lab
 
-**AI that can show its work. Infrastructure experiments you can reproduce.**
+**Karthik Coimbatore Varadaraj**
 
-Independent engineering by **Karthik Coimbatore Varadaraj** · **v0.1.0 research preview**
+Ten Python projects for testing model outputs, retrieval, agent plans and infrastructure behavior.
 
-I care less about an AI system sounding confident and more about what happens when it is wrong. This lab turns that question into ten focused, inspectable projects: evidence, agent controls, retrieval, GPU telemetry, inference capacity, evaluation and drift.
+The focus is failure handling: an answer with a bad citation, a plan with an unsupported action, a service losing capacity, or data changing after deployment. Each project includes code, tests and an example you can change and run locally.
 
-**Start here:** [Evidence Gate](projects/evidence-gate) · [Repair Agent](projects/repair-agent) · [Inference Twin](projects/inference-twin)
+[Downloads](../../releases/tag/reliable-ai-lab-v0.1.1) · [Tests](../../actions/workflows/reliable-ai-lab.yml) · [Architecture](docs/ARCHITECTURE.md) · [Validation](docs/VALIDATION.md)
 
-## Run an experiment
+## Start with these three
+
+**[Evidence Gate](projects/evidence-gate)** checks a claim against its cited text. Change a number in the answer and inspect the flag and source excerpt. It uses lexical checks, not a general fact-checking model.
+
+**[Repair Agent](projects/repair-agent)** checks plan fields, references and allowed actions. It makes bounded repairs and stops when it cannot produce a valid plan. It does not execute the plan.
+
+**[Inference Twin](projects/inference-twin)** simulates a service losing capacity. Compare queue latency before and after server loss, then inspect prediction error on held-out simulated cases.
+
+## Run locally
+
+Python 3.10 or later is required. Default examples need no API key or GPU. Install the dependencies before running offline.
 
 ```bash
-git clone https://github.com/karthikvraj/genAI.git
-cd genAI
+git clone https://github.com/karthikvraj/genAI.git reliable-ai-lab
+cd reliable-ai-lab
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install -e '.[dev]'
@@ -20,62 +30,55 @@ python -m reliable_ai_lab demo evidence-gate
 python -m reliable_ai_lab serve
 ```
 
-Open **http://127.0.0.1:8765** for the local browser playground. On Windows, activate with `.venv\Scripts\activate`. Python 3.10+ is required; default demos need no API key or GPU. Dependencies must be installed first.
+Open `http://127.0.0.1:8765` to change inputs and run the examples in your browser. On Windows, activate the environment with `.venv\Scripts\activate`.
 
-## Ten projects
+The clone command uses the current repository address and creates a local directory named `reliable-ai-lab`.
 
-| Project | What you can inspect | Method |
-|---|---|---|
-| [Evidence Gate](projects/evidence-gate) | Invalid citations, unsupported numbers and negation changes | Lexical claim-to-source screening |
-| [Budget RAG](projects/budget-rag) | Context selection under a hard word budget | Cost-aware, diversity-aware retrieval |
-| [Repair Agent](projects/repair-agent) | A bad plan repaired or stopped without executing it | Bounded validator/repair loop; optional local LLM |
-| [Incident Room](projects/incident-room) | Telemetry changes alongside relevant runbook excerpts | Anomaly detection and robust shifts |
-| [Inference Twin](projects/inference-twin) | Capacity-loss scenarios and surrogate prediction error | Queue simulation and random forest |
-| [GPU Guard](projects/gpu-guard) | Anomaly ranks, reference splits and false positives | Isolation Forest and held-out rank calibration |
-| [EvalForge](projects/evalforge) | Baselines, confidence errors, uncertainty and abstention | Paired bootstrap and evaluation metrics |
-| [Research Lens](projects/research-lens) | Exact excerpts with source identity hashes | Extractive retrieval |
-| [Topology RCA](projects/topology-rca) | Competing single-fault hypotheses and negative evidence | Bayesian dependency-graph inference |
-| [Drift Radar](projects/drift-radar) | Input-distribution changes and effect sizes | Corrected statistical tests and domain classification |
+## Projects
+
+| Project | What it tests |
+|---|---|
+| [Evidence Gate](projects/evidence-gate) | Citation validity, changed numbers and negation in cited claims |
+| [Budget RAG](projects/budget-rag) | Context selection under a fixed word budget |
+| [Repair Agent](projects/repair-agent) | Plan validation, bounded repairs and stop conditions |
+| [Incident Room](projects/incident-room) | Telemetry changes and related runbook passages |
+| [Inference Twin](projects/inference-twin) | Queue behavior after capacity loss and latency prediction error |
+| [GPU Guard](projects/gpu-guard) | Telemetry anomalies using separate fitting and calibration data |
+| [EvalForge](projects/evalforge) | Answer quality, calibration, paired comparisons and abstention |
+| [Research Lens](projects/research-lens) | Extracted source passages with identifiers and content hashes |
+| [Topology RCA](projects/topology-rca) | Fault hypotheses using dependency graphs and healthy observations |
+| [Drift Radar](projects/drift-radar) | Input-distribution changes using statistical tests and a classifier |
 
 ## Downloads
 
-Each project can be packaged independently. Build all ten ZIPs, the full source bundle, SHA-256 checksums and a **read-only HTML gallery of computed sample results**:
+The [v0.1.1 release](../../releases/tag/reliable-ai-lab-v0.1.1) contains a ZIP for each project, the complete lab, a Python wheel and SHA-256 checksums.
+
+[Complete source ZIP](../../releases/download/reliable-ai-lab-v0.1.1/reliable-ai-lab-v0.1.1.zip) · [Recorded demo gallery](../../releases/download/reliable-ai-lab-v0.1.1/reliable-ai-lab-demo-gallery.html)
+
+The HTML gallery shows saved results. It does not run Python. Use the local browser app to compute results from your own inputs.
+
+To build and check the downloads:
 
 ```bash
 python -m pytest
+python -m build --wheel
 python scripts/package.py
+python scripts/check_downloads.py
 ```
 
-Artifacts are written to `dist/`. The HTML gallery replays recorded sample outputs; the Python browser playground computes new results from edited inputs. These are deliberately different modes.
-
-**[Download v0.1.0](https://github.com/karthikvraj/genAI/releases/tag/reliable-ai-lab-v0.1.0)** · [Offline demo gallery](https://github.com/karthikvraj/genAI/releases/download/reliable-ai-lab-v0.1.0/reliable-ai-lab-demo-gallery.html) · [Complete lab ZIP](https://github.com/karthikvraj/genAI/releases/download/reliable-ai-lab-v0.1.0/reliable-ai-lab-v0.1.0.zip)
-
-The public research-preview release is published. [GitHub verification](https://github.com/karthikvraj/genAI/actions/runs/36283821103) passed on Python 3.10 and 3.12, including testing every extracted project ZIP before release. The initial local suite passed 142 tests. Package checksums are attached to the release.
-
-## Bring your own approved input
+## Use your own data
 
 ```bash
-python -m reliable_ai_lab list
 python -m reliable_ai_lab sample gpu-guard --output input.json
 python -m reliable_ai_lab run gpu-guard --input input.json --output result.json
 ```
 
-For Repair Agent only, a local Ollama model can be selected explicitly with `--ollama-model YOUR_INSTALLED_MODEL`. The adapter sends evidence to 127.0.0.1:11434, rejects redirects, and never falls back to a remote provider. Its model behavior is not covered by the deterministic demo results.
+Only use data you are allowed to share with the local process. Repair Agent also has an optional local Ollama adapter, selected explicitly with `--ollama-model YOUR_INSTALLED_MODEL`. Other projects do not use a model provider.
 
-## What is verified—and what is not
+## Scope
 
-The test suite checks reproducible outputs, input validation, budget bounds, evidence references, non-execution, calibration splits, statistical invariants, CLI behavior and local HTTP request restrictions. See [validation record](docs/VALIDATION.md) and the sample results in each project README.
+This is a research prototype. The included data is synthetic or hand-authored; sample results are not production benchmarks. The default tests do not validate optional Ollama inference. Project READMEs describe the assumptions, methods and known failure cases.
 
-These are **research and engineering prototypes**, not production incident responders, universal hallucination detectors or independently validated benchmarks. Synthetic results do not demonstrate real-world performance. Similarity scores, model posteriors and sample accuracy are not interchangeable with calibrated confidence.
+No employer or customer data is included. Earlier facial-emotion work is preserved under [legacy/](legacy/README.md) and is not included in the lab downloads.
 
-## Engineering principles
-
-Evidence first. Bounded behavior. Reproducible results. Honest limits.
-
-All example data is synthetic or hand-authored for this lab. No employer or customer data is included. The initial implementation was developed with AI assistance. No historical adoption, deployment, performance impact or algorithmic novelty is claimed.
-
-[Architecture](docs/ARCHITECTURE.md) · [References](docs/REFERENCES.md) · [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md) · [License scope](LICENSE_SCOPE.md)
-
-## Existing work
-
-The pre-existing facial-emotion-detection notebooks and PDFs in this repository remain unchanged and are separate from this lab. The downloadable lab bundles do not include those older artifacts.
+[Contributing](CONTRIBUTING.md) · [Security](SECURITY.md) · [References](docs/REFERENCES.md) · [License](LICENSE) · [License scope](LICENSE_SCOPE.md)
