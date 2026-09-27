@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Cite the specific software version and distinguish synthetic demonstrations from independent validation."
+title: "Reliable AI Lab: Ten Reproducible AI Reliability Experiments"
+version: 0.1.0
+type: software
+authors:
+  - family-names: "Coimbatore Varadaraj"
+    given-names: "Karthik"
+repository-code: "https://github.com/karthikvraj/genAI"
+license: MIT

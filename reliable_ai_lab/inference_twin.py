@@ -38,7 +38,7 @@ def run(payload: dict) -> dict:
     rate = number(payload.get("arrival_rps"), "arrival_rps", 0.01, 100000)
     service = number(payload.get("service_ms"), "service_ms", 0.01, 10000)
     servers = integer(payload.get("servers"), "servers", 1, 64)
-    lost = integer(payload.get("lost_servers", 1), "lost_servers", 0, servers - 1)
+    lost = integer(payload.get("lost_servers", min(1, servers - 1)), "lost_servers", 0, servers - 1)
     requests = integer(payload.get("requests", 1500), "requests", 100, 10000)
     seed = integer(payload.get("seed", 7), "seed", 0, 1000000)
     baseline = simulate(rate, service, servers, requests, seed)

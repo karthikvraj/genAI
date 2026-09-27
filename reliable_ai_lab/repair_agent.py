@@ -53,6 +53,11 @@ def verify_audit(events: list[dict]) -> bool:
     return True
 
 
+class NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        raise urllib.error.URLError("Local model redirects are not allowed")
+
+
 def ollama_planner(model: str) -> Callable:
     """Explicit opt-in local model adapter; never invoked by demo/tests by default."""
     model = text(model, "model", 200)
@@ -68,7 +73,7 @@ def ollama_planner(model: str) -> Callable:
                                      headers={"Content-Type": "application/json"}, method="POST")
         try:
             # Ignore proxy environment variables: evidence is sent only to loopback.
-            opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+            opener = urllib.request.build_opener(urllib.request.ProxyHandler({}), NoRedirect())
             with opener.open(req, timeout=90) as response:
                 raw = response.read(1000001)
             if len(raw) > 1000000:

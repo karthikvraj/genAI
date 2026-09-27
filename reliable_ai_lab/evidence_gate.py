@@ -28,7 +28,7 @@ def check_claim(claim: str, sources: list[dict], source_ids: list[str],
     score = float(scores[best])
     absent_numbers = sorted(set(_NUMBERS.findall(claim)) - set(_NUMBERS.findall(evidence)))
     negation_mismatch = bool(_NEGATION.search(claim)) != bool(_NEGATION.search(evidence))
-    if score < threshold:
+    if score <= 0 or score < threshold:
         status = "insufficient_evidence"
     elif absent_numbers:
         status = "numeric_review"

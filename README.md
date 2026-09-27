@@ -2,39 +2,78 @@
 
 **AI that can show its work. Infrastructure experiments you can reproduce.**
 
-An independent, local-first portfolio by **Karthik Coimbatore Varadaraj**. Ten focused AI and ML reliability projects, not ten wrappers around the same chatbot.
+Independent engineering by **Karthik Coimbatore Varadaraj** · **v0.1.0 research preview**
 
-> Development preview: code is being assembled and validated. Do not treat this branch as a production release.
+I care less about an AI system sounding confident and more about what happens when it is wrong. This lab turns that question into ten focused, inspectable projects: evidence, agent controls, retrieval, GPU telemetry, inference capacity, evaluation and drift.
+
+**Start here:** [Evidence Gate](projects/evidence-gate) · [Repair Agent](projects/repair-agent) · [Inference Twin](projects/inference-twin)
+
+## Run an experiment
 
 ```bash
+git clone https://github.com/karthikvraj/genAI.git
+cd genAI
+python -m venv .venv
+source .venv/bin/activate
 python -m pip install -e '.[dev]'
-python -m reliable_ai_lab list
 python -m reliable_ai_lab demo evidence-gate
+python -m reliable_ai_lab serve
 ```
 
-Each project ships a seeded synthetic example, explicit assumptions, input validation, and JSON results. No API key or GPU is required for the default demos. An optional local Ollama adapter is available for Repair Agent. The examples contain no employer or customer data.
+Open **http://127.0.0.1:8765** for the local browser playground. On Windows, activate with `.venv\Scripts\activate`. Python 3.10+ is required; default demos need no API key or GPU. Dependencies must be installed first.
 
-## Projects
+## Ten projects
 
-| Project | Question it tackles |
-|---|---|
-| Evidence Gate | Which claims lack support in the cited text? |
-| Budget RAG | Which excerpts fit a strict context budget? |
-| Repair Agent | Can an invalid plan be repaired without executing it? |
-| Incident Room | What changed, and which runbook passages are relevant? |
-| Inference Twin | What happens when inference-serving capacity is lost? |
-| GPU Guard | Which telemetry rows differ from a healthy reference? |
-| EvalForge | Does an answer system improve on the paired baseline? |
-| Research Lens | Which exact source excerpts address the question? |
-| Topology RCA | Which single-fault hypotheses explain observed symptoms? |
-| Drift Radar | Have the input distributions changed? |
+| Project | What you can inspect | Method |
+|---|---|---|
+| [Evidence Gate](projects/evidence-gate) | Invalid citations, unsupported numbers and negation changes | Lexical claim-to-source screening |
+| [Budget RAG](projects/budget-rag) | Context selection under a hard word budget | Cost-aware, diversity-aware retrieval |
+| [Repair Agent](projects/repair-agent) | A bad plan repaired or stopped without executing it | Bounded validator/repair loop; optional local LLM |
+| [Incident Room](projects/incident-room) | Telemetry changes alongside relevant runbook excerpts | Anomaly detection and robust shifts |
+| [Inference Twin](projects/inference-twin) | Capacity-loss scenarios and surrogate prediction error | Queue simulation and random forest |
+| [GPU Guard](projects/gpu-guard) | Anomaly ranks, reference splits and false positives | Isolation Forest and held-out rank calibration |
+| [EvalForge](projects/evalforge) | Baselines, confidence errors, uncertainty and abstention | Paired bootstrap and evaluation metrics |
+| [Research Lens](projects/research-lens) | Exact excerpts with source identity hashes | Extractive retrieval |
+| [Topology RCA](projects/topology-rca) | Competing single-fault hypotheses and negative evidence | Bayesian dependency-graph inference |
+| [Drift Radar](projects/drift-radar) | Input-distribution changes and effect sizes | Corrected statistical tests and domain classification |
 
-## Engineering standard
+## Downloads
+
+Each project can be packaged independently. Build all ten ZIPs, the full source bundle, SHA-256 checksums and a **read-only HTML gallery of computed sample results**:
+
+```bash
+python -m pytest
+python scripts/package.py
+```
+
+Artifacts are written to `dist/`. The HTML gallery replays recorded sample outputs; the Python browser playground computes new results from edited inputs. These are deliberately different modes.
+
+Versioned public release assets, when published, appear under this repository's [Releases](https://github.com/karthikvraj/genAI/releases). A release workflow is included; a workflow file is not itself proof that a release run succeeded.
+
+## Bring your own approved input
+
+```bash
+python -m reliable_ai_lab list
+python -m reliable_ai_lab sample gpu-guard --output input.json
+python -m reliable_ai_lab run gpu-guard --input input.json --output result.json
+```
+
+For Repair Agent only, a local Ollama model can be selected explicitly with `--ollama-model YOUR_INSTALLED_MODEL`. The adapter sends evidence to 127.0.0.1:11434, rejects redirects, and never falls back to a remote provider. Its model behavior is not covered by the deterministic demo results.
+
+## What is verified—and what is not
+
+The test suite checks reproducible outputs, input validation, budget bounds, evidence references, non-execution, calibration splits, statistical invariants, CLI behavior and local HTTP request restrictions. See [validation record](docs/VALIDATION.md) and the sample results in each project README.
+
+These are **research and engineering prototypes**, not production incident responders, universal hallucination detectors or independently validated benchmarks. Synthetic results do not demonstrate real-world performance. Similarity scores, model posteriors and sample accuracy are not interchangeable with calibrated confidence.
+
+## Engineering principles
 
 Evidence first. Bounded behavior. Reproducible results. Honest limits.
 
-These are research and engineering prototypes, not production incident responders, universally reliable hallucination detectors, or independently validated benchmarks. Synthetic demo performance is not evidence of production performance. AI-assisted implementation; review and validation remain part of the work.
+All example data is synthetic or hand-authored for this lab. No employer or customer data is included. The initial implementation was developed with AI assistance. No historical adoption, deployment, performance impact or algorithmic novelty is claimed.
+
+[Architecture](docs/ARCHITECTURE.md) · [References](docs/REFERENCES.md) · [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md) · [License scope](LICENSE_SCOPE.md)
 
 ## Existing work
 
-The pre-existing facial-emotion-detection notebooks and PDFs remain unchanged. They are separate from this portfolio.
+The pre-existing facial-emotion-detection notebooks and PDFs in this repository remain unchanged and are separate from this lab. The downloadable lab bundles do not include those older artifacts.

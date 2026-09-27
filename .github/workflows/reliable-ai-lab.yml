@@ -1,0 +1,65 @@
+name: Reliable AI Lab
+on:
+  push:
+    branches: [main, ai-reliability-lab-v0.1.0]
+    paths: ['reliable_ai_lab/**', 'tests/**', 'scripts/**', 'pyproject.toml', '.github/workflows/reliable-ai-lab.yml']
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: reliable-ai-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ['3.10', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install -e '.[dev]'
+      - run: python -m pytest --junitxml=docs/test-results.xml
+      - run: python -m build --wheel
+      - run: python scripts/package.py
+      - run: python scripts/check_downloads.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reliable-ai-lab-${{ matrix.python }}
+          path: |
+            dist/*
+            docs/test-results.xml
+            docs/standalone-test-results.json
+          if-no-files-found: error
+  release:
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: reliable-ai-lab-3.12
+          path: release-build
+      - name: Publish the tested research preview without replacing an existing release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          COMMIT: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          tag=reliable-ai-lab-v0.1.0
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "Release already exists; not replacing immutable assets."
+          else
+            gh release create "$tag" release-build/dist/* --target "$COMMIT" --prerelease --title "Reliable AI Lab v0.1.0 — ten reproducible experiments" --notes-file docs/RELEASE_NOTES.md
+          fi
