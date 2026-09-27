@@ -48,7 +48,9 @@ python scripts/package.py
 
 Artifacts are written to `dist/`. The HTML gallery replays recorded sample outputs; the Python browser playground computes new results from edited inputs. These are deliberately different modes.
 
-Versioned public release assets, when published, appear under this repository's [Releases](https://github.com/karthikvraj/genAI/releases). A release workflow is included; a workflow file is not itself proof that a release run succeeded.
+**[Download v0.1.0](https://github.com/karthikvraj/genAI/releases/tag/reliable-ai-lab-v0.1.0)** · [Offline demo gallery](https://github.com/karthikvraj/genAI/releases/download/reliable-ai-lab-v0.1.0/reliable-ai-lab-demo-gallery.html) · [Complete lab ZIP](https://github.com/karthikvraj/genAI/releases/download/reliable-ai-lab-v0.1.0/reliable-ai-lab-v0.1.0.zip)
+
+The public research-preview release is published. [GitHub verification](https://github.com/karthikvraj/genAI/actions/runs/36283821103) passed on Python 3.10 and 3.12, including testing every extracted project ZIP before release. The initial local suite passed 142 tests. Package checksums are attached to the release.
 
 ## Bring your own approved input
 
