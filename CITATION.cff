@@ -6,5 +6,5 @@ type: software
 authors:
   - family-names: "Coimbatore Varadaraj"
     given-names: "Karthik"
-repository-code: "https://github.com/karthikvraj/genAI"
+repository-code: "https://github.com/karthikvraj/reliable-ai-lab"
 license: MIT
