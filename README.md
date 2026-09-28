@@ -15,6 +15,16 @@ Reliable AI Lab contains ten independently runnable projects for testing what ha
 
 [Download v0.1.1](../../releases/tag/reliable-ai-lab-v0.1.1) · [Try the demos](#try-it-in-60-seconds) · [Architecture](docs/ARCHITECTURE.md) · [Validation](docs/VALIDATION.md)
 
+### See a failure before installing
+
+In the [Evidence Gate demo](projects/evidence-gate), a cited source says the cache time to live is **60 seconds**, while the generated claim says **600 seconds**. The tool returns `numeric_review`, points to the source, and lists `600` as an unmatched number. It also flags a missing citation and a reversed negation in the same sample. These are review prompts from lexical checks, not proof that an answer is true or false.
+
+```bash
+python -m reliable_ai_lab demo evidence-gate
+```
+
+[View the recorded demo gallery](../../releases/download/reliable-ai-lab-v0.1.1/reliable-ai-lab-demo-gallery.html) · [Download the Evidence Gate project](../../releases/download/reliable-ai-lab-v0.1.1/evidence-gate-v0.1.1.zip)
+
 ## Why this exists
 
 AI demos often show the happy path. This repository focuses on the failure path.
