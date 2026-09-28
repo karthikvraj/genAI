@@ -21,7 +21,7 @@ The focus is failure handling: an answer with a bad citation, a plan with an uns
 Python 3.10 or later is required. Default examples need no API key or GPU. Install the dependencies before running offline.
 
 ```bash
-git clone https://github.com/karthikvraj/genAI.git reliable-ai-lab
+git clone https://github.com/karthikvraj/reliable-ai-lab.git
 cd reliable-ai-lab
 python -m venv .venv
 source .venv/bin/activate
