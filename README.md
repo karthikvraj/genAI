@@ -1,24 +1,42 @@
 # Reliable AI Lab
 
+[![Tests](https://github.com/karthikvraj/reliable-ai-lab/actions/workflows/reliable-ai-lab.yml/badge.svg)](https://github.com/karthikvraj/reliable-ai-lab/actions/workflows/reliable-ai-lab.yml)
+[![Release](https://img.shields.io/github/v/release/karthikvraj/reliable-ai-lab)](https://github.com/karthikvraj/reliable-ai-lab/releases)
+[![Downloads](https://img.shields.io/github/downloads/karthikvraj/reliable-ai-lab/total)](https://github.com/karthikvraj/reliable-ai-lab/releases)
+[![License](https://img.shields.io/github/license/karthikvraj/reliable-ai-lab)](LICENSE)
+
 **Karthik Coimbatore Varadaraj**
 
-Ten Python projects for testing model outputs, retrieval, agent plans and infrastructure behavior.
+An open-source Python lab for **AI reliability, LLM evaluation, RAG testing, agent validation, model drift detection, GPU anomaly detection, and inference reliability**.
 
-The focus is failure handling: an answer with a bad citation, a plan with an unsupported action, a service losing capacity, or data changing after deployment. Each project includes code, tests and an example you can change and run locally.
+Reliable AI Lab contains ten independently runnable projects for testing what happens when AI systems fail: citations become inconsistent, retrieval budgets get tight, agent plans contain unsupported actions, infrastructure loses capacity, telemetry drifts, or deployed data changes.
 
-[Downloads](../../releases/tag/reliable-ai-lab-v0.1.1) · [Tests](../../actions/workflows/reliable-ai-lab.yml) · [Architecture](docs/ARCHITECTURE.md) · [Validation](docs/VALIDATION.md)
+**No API key or GPU is required for the default demos.**
 
-## Start with these three
+[Download v0.1.1](../../releases/tag/reliable-ai-lab-v0.1.1) · [Try the demos](#try-it-in-60-seconds) · [Architecture](docs/ARCHITECTURE.md) · [Validation](docs/VALIDATION.md)
 
-**[Evidence Gate](projects/evidence-gate)** checks a claim against its cited text. Change a number in the answer and inspect the flag and source excerpt. It uses lexical checks, not a general fact-checking model.
+## Why this exists
 
-**[Repair Agent](projects/repair-agent)** checks plan fields, references and allowed actions. It makes bounded repairs and stops when it cannot produce a valid plan. It does not execute the plan.
+AI demos often show the happy path. This repository focuses on the failure path.
 
-**[Inference Twin](projects/inference-twin)** simulates a service losing capacity. Compare queue latency before and after server loss, then inspect prediction error on held-out simulated cases.
+Use it to explore:
 
-## Run locally
+- grounded-answer and citation checks
+- retrieval under fixed context budgets
+- bounded agent-plan repair
+- incident and runbook matching
+- inference-capacity failure simulation
+- GPU telemetry anomaly detection
+- evaluation, calibration and abstention
+- reproducible research evidence extraction
+- dependency-graph root-cause hypotheses
+- statistical and classifier-based drift detection
 
-Python 3.10 or later is required. Default examples need no API key or GPU. Install the dependencies before running offline.
+Each project includes code, tests, synthetic or hand-authored examples, and documented assumptions.
+
+## Try it in 60 seconds
+
+Python 3.10 or later is required.
 
 ```bash
 git clone https://github.com/karthikvraj/reliable-ai-lab.git
@@ -27,12 +45,23 @@ python -m venv .venv
 source .venv/bin/activate
 python -m pip install -e '.[dev]'
 python -m reliable_ai_lab demo evidence-gate
+```
+
+To launch the local browser playground:
+
+```bash
 python -m reliable_ai_lab serve
 ```
 
-Open `http://127.0.0.1:8765` to change inputs and run the examples in your browser. On Windows, activate the environment with `.venv\Scripts\activate`.
+Open `http://127.0.0.1:8765`. On Windows, activate the environment with `.venv\Scripts\activate`.
 
-The clone command uses the current repository address and creates a local directory named `reliable-ai-lab`.
+## Start with these three
+
+**[Evidence Gate](projects/evidence-gate)** checks a claim against its cited text. Change a number in the answer and inspect the flag and source excerpt. It uses lexical checks, not a general fact-checking model.
+
+**[Repair Agent](projects/repair-agent)** checks plan fields, references and allowed actions. It makes bounded repairs and stops when it cannot produce a valid plan. It does not execute the plan.
+
+**[Inference Twin](projects/inference-twin)** simulates a service losing capacity. Compare queue latency before and after server loss, then inspect prediction error on held-out simulated cases.
 
 ## Projects
 
@@ -80,5 +109,7 @@ Only use data you are allowed to share with the local process. Repair Agent also
 This is a research prototype. The included data is synthetic or hand-authored; sample results are not production benchmarks. The default tests do not validate optional Ollama inference. Project READMEs describe the assumptions, methods and known failure cases.
 
 No employer or customer data is included. Earlier facial-emotion work is preserved under [legacy/](legacy/README.md) and is not included in the lab downloads.
+
+If this project is useful, consider starring the repository, sharing a project example, or opening an issue with feedback.
 
 [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md) · [References](docs/REFERENCES.md) · [License](LICENSE) · [License scope](LICENSE_SCOPE.md)
