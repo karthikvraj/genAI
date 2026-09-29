@@ -9,6 +9,38 @@ description = "Python projects for model evaluation, agent validation and infras
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [{name = "Karthik Coimbatore Varadaraj"}]
+keywords = [
+  "artificial-intelligence",
+  "machine-learning",
+  "reliable-ai",
+  "responsible-ai",
+  "llm",
+  "llm-evaluation",
+  "rag",
+  "retrieval-augmented-generation",
+  "agentic-ai",
+  "ai-agents",
+  "ai-evaluation",
+  "model-drift",
+  "mlops",
+  "ai-observability",
+  "gpu",
+  "inference",
+  "reliability-engineering",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Topic :: Software Development :: Testing",
+  "Topic :: System :: Monitoring",
+]
 dependencies = ["numpy>=1.24,<3", "scipy>=1.10,<2", "scikit-learn>=1.3,<2"]
 
 [project.optional-dependencies]
