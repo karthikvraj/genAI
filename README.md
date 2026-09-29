@@ -13,7 +13,7 @@ Reliable AI Lab contains eleven independently runnable projects for testing what
 
 **No API key or GPU is required for the default demos.**
 
-[Download v0.1.1](../../releases/tag/reliable-ai-lab-v0.1.1) · [Try the demos](#try-it-in-60-seconds) · [Architecture](docs/ARCHITECTURE.md) · [Validation](docs/VALIDATION.md)
+[Download v0.1.2](../../releases/tag/reliable-ai-lab-v0.1.2) · [Try the demos](#try-it-in-60-seconds) · [Architecture](docs/ARCHITECTURE.md) · [Validation](docs/VALIDATION.md)
 
 ### See a failure before installing
 
@@ -23,7 +23,7 @@ In the [Evidence Gate demo](projects/evidence-gate), a cited source says the cac
 python -m reliable_ai_lab demo evidence-gate
 ```
 
-[View the recorded demo gallery](../../releases/download/reliable-ai-lab-v0.1.1/reliable-ai-lab-demo-gallery.html) · [Download the Evidence Gate project](../../releases/download/reliable-ai-lab-v0.1.1/evidence-gate-v0.1.1.zip)
+[View the recorded demo gallery](../../releases/download/reliable-ai-lab-v0.1.2/reliable-ai-lab-demo-gallery.html) · [Download the Evidence Gate project](../../releases/download/reliable-ai-lab-v0.1.2/evidence-gate-v0.1.2.zip)
 
 ## Why this exists
 
@@ -92,9 +92,9 @@ Open `http://127.0.0.1:8765`. On Windows, activate the environment with `.venv\S
 
 ## Downloads
 
-The [v0.1.1 release](../../releases/tag/reliable-ai-lab-v0.1.1) contains ZIPs for the original ten projects, the complete lab, a Python wheel and SHA-256 checksums.
+The [v0.1.2 release](../../releases/tag/reliable-ai-lab-v0.1.2) contains ZIPs for all eleven projects, the complete lab, a Python wheel and SHA-256 checksums.
 
-[Complete source ZIP](../../releases/download/reliable-ai-lab-v0.1.1/reliable-ai-lab-v0.1.1.zip) · [Recorded demo gallery](../../releases/download/reliable-ai-lab-v0.1.1/reliable-ai-lab-demo-gallery.html)
+[Complete source ZIP](../../releases/download/reliable-ai-lab-v0.1.2/reliable-ai-lab-v0.1.2.zip) · [Recorded demo gallery](../../releases/download/reliable-ai-lab-v0.1.2/reliable-ai-lab-demo-gallery.html)
 
 The HTML gallery shows saved results. It does not run Python. Use the local browser app to compute results from your own inputs.
 
