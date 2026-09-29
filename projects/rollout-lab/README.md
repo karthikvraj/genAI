@@ -2,10 +2,22 @@
 
 Evaluate a staged rollout from saved baseline and canary telemetry windows. It compares error rates with Wilson intervals, applies an absolute error-rate tolerance, and checks a sampled p95 latency ratio. Its outputs are recommendations for a human operator; it never changes traffic.
 
+From the repository root (Python 3.10 or later):
+
 ```bash
 python3 projects/rollout-lab/rollout_lab.py projects/rollout-lab/example.json
 python3 -m unittest discover -s projects/rollout-lab -p 'test_*.py'
 ```
+
+From inside the extracted [v0.1.3 standalone ZIP](https://github.com/karthikvraj/reliable-ai-lab/releases/download/reliable-ai-lab-v0.1.3/rollout-lab-v0.1.3.zip):
+
+```bash
+python3 rollout_lab.py example.json
+python3 -m unittest discover -s . -p 'test_*.py'
+```
+
+This project runs directly from the script; it is not registered with the shared `reliable_ai_lab` CLI or browser playground. No third-party Python packages are required.
+
 
 The synthetic example starts with a clean 5% canary window and then shows a substantial error regression at 20%, producing `ROLLBACK_RECOMMENDED`. Change the second canary's errors to `7` and latencies to `[92,96,100,105,120]` to see `PROMOTION_CANDIDATE`. Use `--output report.json` to save a report.
 

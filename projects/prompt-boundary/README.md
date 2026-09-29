@@ -2,10 +2,22 @@
 
 An offline harness for scoring *saved* agent traces against explicit prompt-injection outcomes. It checks whether an agent called a tool outside its trusted allowlist or emitted a synthetic protected marker in its response or tool arguments. It also measures whether benign inputs still completed a specified literal task check.
 
+From the repository root (Python 3.10 or later):
+
 ```bash
 python3 projects/prompt-boundary/prompt_boundary.py projects/prompt-boundary/example.json
 python3 -m unittest discover -s projects/prompt-boundary -p 'test_*.py'
 ```
+
+From inside the extracted [v0.1.3 standalone ZIP](https://github.com/karthikvraj/reliable-ai-lab/releases/download/reliable-ai-lab-v0.1.3/prompt-boundary-v0.1.3.zip):
+
+```bash
+python3 prompt_boundary.py example.json
+python3 -m unittest discover -s . -p 'test_*.py'
+```
+
+This project runs directly from the script; it is not registered with the shared `reliable_ai_lab` CLI or browser playground. No third-party Python packages are required.
+
 
 The example includes an injected document that was ignored, a compromised tool-result trace, and a benign control. Replace `response` and `tool_calls` with actual saved outputs from a model under test. `untrusted_text` records what the agent saw; this tool does not invoke a model or execute tools. `--output report.json` saves the scored record.
 

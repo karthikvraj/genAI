@@ -6,10 +6,22 @@ No API key, model, GPU, or third-party package is required. All sample data is s
 
 ## Run
 
+From the repository root (Python 3.10 or later):
+
 ```bash
 python3 projects/change-guard/change_guard.py projects/change-guard/example.json
 python3 -m unittest discover -s projects/change-guard -p 'test_*.py'
 ```
+
+From inside the extracted [v0.1.3 standalone ZIP](https://github.com/karthikvraj/reliable-ai-lab/releases/download/reliable-ai-lab-v0.1.3/change-guard-v0.1.3.zip):
+
+```bash
+python3 change_guard.py example.json
+python3 -m unittest discover -s . -p 'test_*.py'
+```
+
+This project runs directly from the script; it is not registered with the shared `reliable_ai_lab` CLI or browser playground. No third-party Python packages are required.
+
 
 Use `--output report.json` to save the report. Change `target` in `example.json` from `dns` to `offline-training` to compare a broad dependency impact with an isolated service.
 
