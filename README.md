@@ -94,6 +94,20 @@ Open `http://127.0.0.1:8765`. On Windows, activate the environment with `.venv\S
 | [Prompt Boundary](projects/prompt-boundary) | Unauthorized tool calls and synthetic marker leakage in saved agent traces |
 | [Rollout Lab](projects/rollout-lab) | Canary error and latency guardrails across staged windows |
 
+### Run the three standalone projects
+
+ChangeGuard, Prompt Boundary, and Rollout Lab run directly from Python scripts. They are included in the source bundle and their own ZIPs; the wheel, shared CLI, browser playground, and recorded gallery currently cover the original ten projects.
+
+From the repository root:
+
+```bash
+python3 projects/change-guard/change_guard.py projects/change-guard/example.json
+python3 projects/prompt-boundary/prompt_boundary.py projects/prompt-boundary/example.json
+python3 projects/rollout-lab/rollout_lab.py projects/rollout-lab/example.json
+```
+
+Each project README also has commands for running its extracted standalone ZIP.
+
 ## Downloads
 
 The [v0.1.3 release](../../releases/tag/reliable-ai-lab-v0.1.3) contains ZIPs for all thirteen projects, the complete lab, a Python wheel and SHA-256 checksums.
