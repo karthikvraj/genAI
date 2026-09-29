@@ -9,11 +9,11 @@
 
 An open-source Python lab for **AI reliability, LLM evaluation, RAG testing, agent validation, model drift detection, GPU anomaly detection, and inference reliability**.
 
-Reliable AI Lab contains ten independently runnable projects for testing what happens when AI systems fail: citations become inconsistent, retrieval budgets get tight, agent plans contain unsupported actions, infrastructure loses capacity, telemetry drifts, or deployed data changes.
+Reliable AI Lab contains eleven independently runnable projects for testing what happens when AI systems fail: citations become inconsistent, retrieval budgets get tight, agent plans contain unsupported actions, infrastructure loses capacity, telemetry drifts, or deployed data changes.
 
 **No API key or GPU is required for the default demos.**
 
-[Download v0.1.1](../../releases/tag/reliable-ai-lab-v0.1.1) · [Try the demos](#try-it-in-60-seconds) · [Architecture](docs/ARCHITECTURE.md) · [Validation](docs/VALIDATION.md)
+[Download v0.1.2](../../releases/tag/reliable-ai-lab-v0.1.2) · [Try the demos](#try-it-in-60-seconds) · [Architecture](docs/ARCHITECTURE.md) · [Validation](docs/VALIDATION.md)
 
 ### See a failure before installing
 
@@ -23,7 +23,7 @@ In the [Evidence Gate demo](projects/evidence-gate), a cited source says the cac
 python -m reliable_ai_lab demo evidence-gate
 ```
 
-[View the recorded demo gallery](../../releases/download/reliable-ai-lab-v0.1.1/reliable-ai-lab-demo-gallery.html) · [Download the Evidence Gate project](../../releases/download/reliable-ai-lab-v0.1.1/evidence-gate-v0.1.1.zip)
+[View the recorded demo gallery](../../releases/download/reliable-ai-lab-v0.1.2/reliable-ai-lab-demo-gallery.html) · [Download the Evidence Gate project](../../releases/download/reliable-ai-lab-v0.1.2/evidence-gate-v0.1.2.zip)
 
 ## Why this exists
 
@@ -41,6 +41,7 @@ Use it to explore:
 - reproducible research evidence extraction
 - dependency-graph root-cause hypotheses
 - statistical and classifier-based drift detection
+- preflight checks for proposed infrastructure changes
 
 Each project includes code, tests, synthetic or hand-authored examples, and documented assumptions.
 
@@ -87,12 +88,13 @@ Open `http://127.0.0.1:8765`. On Windows, activate the environment with `.venv\S
 | [Research Lens](projects/research-lens) | Extracted source passages with identifiers and content hashes |
 | [Topology RCA](projects/topology-rca) | Fault hypotheses using dependency graphs and healthy observations |
 | [Drift Radar](projects/drift-radar) | Input-distribution changes using statistical tests and a classifier |
+| [ChangeGuard](projects/change-guard) | Proposed changes, downstream blast radius and rollback readiness |
 
 ## Downloads
 
-The [v0.1.1 release](../../releases/tag/reliable-ai-lab-v0.1.1) contains a ZIP for each project, the complete lab, a Python wheel and SHA-256 checksums.
+The [v0.1.2 release](../../releases/tag/reliable-ai-lab-v0.1.2) contains ZIPs for all eleven projects, the complete lab, a Python wheel and SHA-256 checksums.
 
-[Complete source ZIP](../../releases/download/reliable-ai-lab-v0.1.1/reliable-ai-lab-v0.1.1.zip) · [Recorded demo gallery](../../releases/download/reliable-ai-lab-v0.1.1/reliable-ai-lab-demo-gallery.html)
+[Complete source ZIP](../../releases/download/reliable-ai-lab-v0.1.2/reliable-ai-lab-v0.1.2.zip) · [Recorded demo gallery](../../releases/download/reliable-ai-lab-v0.1.2/reliable-ai-lab-demo-gallery.html)
 
 The HTML gallery shows saved results. It does not run Python. Use the local browser app to compute results from your own inputs.
 

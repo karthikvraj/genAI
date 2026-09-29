@@ -1,0 +1,16 @@
+{
+  "services": [
+    {"id": "dns", "criticality": 5, "depends_on": []},
+    {"id": "api", "criticality": 5, "depends_on": ["dns"]},
+    {"id": "inference", "criticality": 4, "depends_on": ["api"]},
+    {"id": "analytics", "criticality": 2, "depends_on": ["api"]},
+    {"id": "offline-training", "criticality": 2, "depends_on": []}
+  ],
+  "change": {
+    "target": "dns", "owner": "platform-team", "canary_percent": 5,
+    "rollback_minutes": 8, "observation_minutes": 20,
+    "rollback_tested": true, "health_checks": true
+  },
+  "policy": {"max_canary_percent": 10, "max_rollback_minutes": 15,
+             "min_observation_minutes": 10}
+}

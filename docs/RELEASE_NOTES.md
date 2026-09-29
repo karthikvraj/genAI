@@ -1,14 +1,9 @@
-# Reliable AI Lab v0.1.1
+# Reliable AI Lab v0.1.2
 
-Documentation and packaging update. Project algorithms are unchanged.
+Adds ChangeGuard, a deterministic preflight for proposed infrastructure changes. Given a service dependency graph and a change plan, it reports reachable downstream services, criticality-weighted exposure, rollout and rollback findings, and a reproducible input fingerprint. It never executes or approves a change.
 
-- Rewrote the main README, project pages and demo text.
-- Moved the four earlier facial-emotion notebooks and PDFs under `legacy/facial-emotion-detection/` without changing their contents.
-- Used relative repository links and removed the fixed release tag from the workflow and archive checker.
-- Added checksum verification to the extracted-package tests.
+- Includes a synthetic DNS change example and tests for wide impact, rollback blocking, isolated changes, graph cycles, and invalid dependencies.
+- Adds ChangeGuard to the project index and CI smoke checks.
+- Ships a standalone `change-guard-v0.1.2.zip` alongside the ten existing project ZIPs, the complete source ZIP, wheel, recorded gallery, manifest, and checksums.
 
-The release includes ten project ZIPs, the full source bundle, a Python wheel, the recorded HTML gallery and SHA-256 checksums. The workflow tests the main suite and each extracted project before publishing.
-
-The previous v0.1.0 release is retained. This release does not complete the repository-name change; that requires the owner's GitHub Settings page.
-
-The examples use synthetic data. The HTML gallery shows saved results; run `python -m reliable_ai_lab serve` for editable inputs and fresh results. Optional Ollama inference is not covered by the default tests.
+The example is synthetic. Exposure is potential impact, not a measured failure probability. Existing projects retain their algorithms; the version update creates new downloadable artifacts without modifying v0.1.1.

@@ -30,6 +30,7 @@ def main() -> None:
             raise SystemExit(f"Checksum or size mismatch: {name}")
 
     expected = {f"{name}-v{__version__}.zip" for name in PROJECTS}
+    expected.add(f"change-guard-v{__version__}.zip")
     listed = {item["file"] for item in manifest["artifacts"]}
     if not expected.issubset(listed):
         raise SystemExit("Manifest is missing a project archive")
@@ -65,7 +66,7 @@ def main() -> None:
     (ROOT / "docs" / "standalone-test-results.json").write_text(
         json.dumps(results, indent=2) + "\n"
     )
-    if len(results) != len(PROJECTS) or not all(item["passed"] for item in results):
+    if len(results) != len(expected) or not all(item["passed"] for item in results):
         raise SystemExit("A standalone download failed verification")
 
 
