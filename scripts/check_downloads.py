@@ -30,7 +30,7 @@ def main() -> None:
             raise SystemExit(f"Checksum or size mismatch: {name}")
 
     expected = {f"{name}-v{__version__}.zip" for name in PROJECTS}
-    expected.add(f"change-guard-v{__version__}.zip")
+    expected.update(f"{name}-v{__version__}.zip" for name in ("change-guard", "prompt-boundary", "rollout-lab"))
     listed = {item["file"] for item in manifest["artifacts"]}
     if not expected.issubset(listed):
         raise SystemExit("Manifest is missing a project archive")
