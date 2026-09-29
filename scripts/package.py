@@ -203,6 +203,9 @@ def build(out=None):
                 shutil.copy2(ROOT/'tests'/filename,tests/filename)
             dump(stage/'examples/input.json',inputs[name]);dump(stage/'examples/result.json',results[name]);dump(stage/'environment.json',env)
             filename=f'{name}-v{__version__}.zip';zip_directory(stage,out/filename,f'{name}-v{__version__}');artifacts.append(out/filename)
+    standalone = out/f'change-guard-v{__version__}.zip'
+    zip_directory(ROOT/'projects'/'change-guard', standalone, f'change-guard-v{__version__}')
+    artifacts.append(standalone)
     # Static replay is explicitly labeled: changing inputs does not run Python in this HTML file.
     page=(ROOT/'reliable_ai_lab/web/index.html').read_text()
     page=page.replace('CPU-only demo','Recorded sample').replace('Run experiment →','Replay recorded result →').replace('Running the local experiment…','Loading the recorded result…')
