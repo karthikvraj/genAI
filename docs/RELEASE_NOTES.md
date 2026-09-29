@@ -1,9 +1,10 @@
-# Reliable AI Lab v0.1.2
+# Reliable AI Lab v0.1.3
 
-Adds ChangeGuard, a deterministic preflight for proposed infrastructure changes. Given a service dependency graph and a change plan, it reports reachable downstream services, criticality-weighted exposure, rollout and rollback findings, and a reproducible input fingerprint. It never executes or approves a change.
+Adds two independently runnable, synthetic-data projects:
 
-- Includes a synthetic DNS change example and tests for wide impact, rollback blocking, isolated changes, graph cycles, and invalid dependencies.
-- Adds ChangeGuard to the project index and CI smoke checks.
-- Ships a standalone `change-guard-v0.1.2.zip` alongside the ten existing project ZIPs, the complete source ZIP, wheel, recorded gallery, manifest, and checksums.
+- **Prompt Boundary** scores saved agent traces for unauthorized tool calls, literal synthetic marker leakage, and benign task completion. It does not run or defend a model.
+- **Rollout Lab** checks staged baseline and canary windows using error-rate Wilson intervals and sampled latency guardrails. It recommends review or rollback but never changes live traffic.
 
-The example is synthetic. Exposure is potential impact, not a measured failure probability. Existing projects retain their algorithms; the version update creates new downloadable artifacts without modifying v0.1.1.
+Both projects include documented input formats, limitations, sample traces, and focused tests. The main CI suite runs their command-line examples. The release includes standalone ZIPs for both, plus the previous eleven project ZIPs, full source ZIP, wheel, recorded gallery, manifest, and SHA-256 checksums. Extracted archives are tested before publication.
+
+Results are illustrative and based on synthetic examples; neither project establishes production safety or model security. v0.1.2 remains available and unchanged.
