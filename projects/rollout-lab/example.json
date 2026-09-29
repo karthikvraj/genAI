@@ -1,0 +1,15 @@
+{
+  "policy": {"min_requests": 100, "min_latency_samples": 5,
+             "required_clean_windows": 2, "max_error_rate_increase": 0.01,
+             "max_p95_ratio": 1.25},
+  "windows": [
+    {"id": "canary-5-percent", "baseline": {"requests": 1000, "errors": 5,
+       "latency_ms": [90, 95, 98, 102, 110]},
+     "canary": {"requests": 1000, "errors": 6,
+       "latency_ms": [91, 97, 101, 107, 118]}},
+    {"id": "canary-20-percent", "baseline": {"requests": 1000, "errors": 6,
+       "latency_ms": [90, 94, 100, 105, 112]},
+     "canary": {"requests": 1000, "errors": 80,
+       "latency_ms": [95, 99, 105, 117, 145]}}
+  ]
+}
