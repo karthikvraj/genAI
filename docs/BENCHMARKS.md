@@ -25,3 +25,19 @@ Reliable AI Lab includes demonstrations and tests, but synthetic examples should
 ## Contribution opportunities
 
 Contributors can add scenario packs, metrics, baselines or analysis scripts. A benchmark PR should state the hypothesis, data origin/license, expected outcome and how to reproduce the result.
+
+
+## Current executable benchmark
+
+Version 0.2.0 introduces the first executable benchmark harness for grounding and retrieval regression cases.
+
+Run:
+
+```bash
+python -m reliable_ai_lab benchmark
+python -m reliable_ai_lab benchmark --output benchmark-results.json
+```
+
+The output uses schema version `1.0` and records the project version, fixture provenance, expected and observed outcomes, and aggregate pass counts. The initial harness intentionally measures only whether the current implementation reproduces expected behavior on the shipped synthetic fixtures.
+
+Future benchmark contributions should expand scenario diversity before treating aggregate metrics as comparative evidence.
