@@ -167,6 +167,14 @@ python -m reliable_ai_lab run gpu-guard --input input.json --output result.json
 
 Only use data you are allowed to share with the local process. Repair Agent also has an optional local Ollama adapter, selected explicitly with `--ollama-model YOUR_INSTALLED_MODEL`. Other projects do not use a model provider.
 
+## Community contributors
+
+Reliable AI Lab welcomes and credits external contributions.
+
+- [@PandaHUN777](https://github.com/PandaHUN777) — contributed the Prompt Boundary final-response marker leak regression scenario ([#14](../../pull/14)) and the Rollout Lab single-noisy-latency scenario with regression coverage ([#15](../../pull/15)).
+
+See [CONTRIBUTORS.md](CONTRIBUTORS.md) for the contribution record.
+
 ## Scope
 
 This is a research prototype. The included data is synthetic or hand-authored; sample results are not production benchmarks. The default tests do not validate optional Ollama inference. Project READMEs describe the assumptions, methods and known failure cases.
@@ -175,4 +183,4 @@ No employer or customer data is included. Earlier facial-emotion work is preserv
 
 If this project is useful, consider starring the repository, sharing a project example, or opening an issue with feedback.
 
-[Contributing](CONTRIBUTING.md) · [Roadmap](docs/ROADMAP.md) · [Benchmarks](docs/BENCHMARKS.md) · [Adopters](docs/ADOPTERS.md) · [Security](SECURITY.md) · [References](docs/REFERENCES.md) · [Cite](CITATION.cff) · [License](LICENSE)
+[Contributing](CONTRIBUTING.md) · [Contributors](CONTRIBUTORS.md) · [Roadmap](docs/ROADMAP.md) · [Benchmarks](docs/BENCHMARKS.md) · [Adopters](docs/ADOPTERS.md) · [Security](SECURITY.md) · [References](docs/REFERENCES.md) · [Cite](CITATION.cff) · [License](LICENSE)
