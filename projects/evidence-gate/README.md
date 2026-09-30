@@ -10,7 +10,7 @@ Karthik Coimbatore Varadaraj · v0.1.1
 
 LLM answers can cite real documents while introducing unsupported numbers or claims.
 
-Resolve citations, split cited text into sentences, rank lexical overlap, and flag unmatched numbers and negation changes. Keep the exact supporting excerpt.
+Resolve citations, split cited text into sentences, rank lexical overlap, normalize recognized time quantities to seconds, and flag unmatched numbers and negation changes. Keep the exact supporting excerpt.
 
 ## Run
 
@@ -57,12 +57,13 @@ Seed 7, using synthetic or hand-authored data. These results illustrate the code
 ## Limitations
 
 - Similarity is not a probability of truth.
-- Numbers and negations are heuristic checks; paraphrases, units, entities and multi-hop claims can be misclassified.
+- Numeric comparison normalizes only full singular/plural spellings of seconds, minutes and hours; abbreviations, bare values and other units are not converted.
+- Numbers and negations are heuristic checks; paraphrases, unsupported or ambiguous units, entities and multi-hop claims can be misclassified.
 - A passing lexical check must not authorize a consequential action.
 
 ## Next work
 
-Replace lexical screening with a separately evaluated entailment model; add multilingual, unit-conversion and adversarial datasets.
+Replace lexical screening with a separately evaluated entailment model; expand time-unit coverage and add multilingual and adversarial datasets.
 
 ## Data and license
 
