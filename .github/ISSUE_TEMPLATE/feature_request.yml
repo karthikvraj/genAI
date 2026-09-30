@@ -1,0 +1,24 @@
+name: Feature request
+description: Propose a focused reliability capability or improvement
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Reliability problem
+      description: What failure mode or workflow should this address?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed approach
+      description: Describe the smallest useful change and how it could be tested.
+    validations:
+      required: true
+  - type: textarea
+    id: limits
+    attributes:
+      label: Assumptions and limitations
+      description: What should this feature not claim or do?

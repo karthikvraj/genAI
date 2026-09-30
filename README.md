@@ -7,7 +7,9 @@
 
 **Karthik Coimbatore Varadaraj**
 
-An open-source Python lab for **AI reliability, LLM evaluation, RAG testing, agent validation, model drift detection, GPU anomaly detection, and inference reliability**.
+**Reliability engineering for AI systems — before production.**
+
+Reliable AI Lab is an open-source Python toolkit for **LLM evaluation, RAG testing, AI-agent validation, model drift detection, GPU anomaly detection, inference reliability, and deployment guardrails**.
 
 Reliable AI Lab contains thirteen independently runnable projects for testing what happens when AI systems fail: citations become inconsistent, retrieval budgets get tight, agent plans contain unsupported actions, infrastructure loses capacity, telemetry drifts, or deployed data changes.
 
@@ -68,13 +70,15 @@ python -m reliable_ai_lab serve
 
 Open `http://127.0.0.1:8765`. On Windows, activate the environment with `.venv\Scripts\activate`.
 
-## Start with these three
+## Flagship reliability tracks
 
 **[Evidence Gate](projects/evidence-gate)** checks a claim against its cited text. Change a number in the answer and inspect the flag and source excerpt. It uses lexical checks, not a general fact-checking model.
 
 **[Repair Agent](projects/repair-agent)** checks plan fields, references and allowed actions. It makes bounded repairs and stops when it cannot produce a valid plan. It does not execute the plan.
 
 **[Inference Twin](projects/inference-twin)** simulates a service losing capacity. Compare queue latency before and after server loss, then inspect prediction error on held-out simulated cases.
+
+Together these provide three entry points: **grounding reliability**, **agent reliability**, and **AI infrastructure reliability**. The remaining projects extend those tracks with retrieval budgets, evaluation, drift, change safety, prompt boundaries, root-cause hypotheses, and rollout guardrails.
 
 ## Projects
 
@@ -142,4 +146,4 @@ No employer or customer data is included. Earlier facial-emotion work is preserv
 
 If this project is useful, consider starring the repository, sharing a project example, or opening an issue with feedback.
 
-[Contributing](CONTRIBUTING.md) · [Security](SECURITY.md) · [References](docs/REFERENCES.md) · [License](LICENSE) · [License scope](LICENSE_SCOPE.md)
+[Contributing](CONTRIBUTING.md) · [Roadmap](docs/ROADMAP.md) · [Benchmarks](docs/BENCHMARKS.md) · [Adopters](docs/ADOPTERS.md) · [Security](SECURITY.md) · [References](docs/REFERENCES.md) · [Cite](CITATION.cff) · [License](LICENSE)

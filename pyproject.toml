@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "kv-reliable-ai-lab"
 version = "0.1.3"
-description = "Python projects for model evaluation, agent validation and infrastructure reliability"
+description = "Reliability engineering toolkit for LLMs, RAG, AI agents, model drift, GPU telemetry and inference systems"
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [{name = "Karthik Coimbatore Varadaraj"}]
@@ -42,6 +42,12 @@ classifiers = [
   "Topic :: System :: Monitoring",
 ]
 dependencies = ["numpy>=1.24,<3", "scipy>=1.10,<2", "scikit-learn>=1.3,<2"]
+
+[project.urls]
+Homepage = "https://github.com/karthikvraj/reliable-ai-lab"
+Repository = "https://github.com/karthikvraj/reliable-ai-lab"
+Issues = "https://github.com/karthikvraj/reliable-ai-lab/issues"
+Changelog = "https://github.com/karthikvraj/reliable-ai-lab/blob/main/docs/RELEASE_NOTES.md"
 
 [project.optional-dependencies]
 dev = ["pytest>=8,<10", "build>=1,<2"]
