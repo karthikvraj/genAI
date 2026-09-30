@@ -15,7 +15,7 @@ Reliable AI Lab contains thirteen independently runnable projects for testing wh
 
 **No API key or GPU is required for the default demos.**
 
-[Download v0.1.3](../../releases/tag/reliable-ai-lab-v0.1.3) · [Try the demos](#try-it-in-60-seconds) · [Architecture](docs/ARCHITECTURE.md) · [Validation](docs/VALIDATION.md)
+[Download v0.2.0](../../releases/tag/reliable-ai-lab-v0.2.0) · [Try the demos](#try-it-in-60-seconds) · [Architecture](docs/ARCHITECTURE.md) · [Validation](docs/VALIDATION.md)
 
 ### See a failure before installing
 
@@ -25,7 +25,7 @@ In the [Evidence Gate demo](projects/evidence-gate), a cited source says the cac
 python -m reliable_ai_lab demo evidence-gate
 ```
 
-[View the recorded demo gallery](../../releases/download/reliable-ai-lab-v0.1.3/reliable-ai-lab-demo-gallery.html) · [Download the Evidence Gate project](../../releases/download/reliable-ai-lab-v0.1.3/evidence-gate-v0.1.3.zip)
+[View the recorded demo gallery](../../releases/download/reliable-ai-lab-v0.2.0/reliable-ai-lab-demo-gallery.html) · [Download the Evidence Gate project](../../releases/download/reliable-ai-lab-v0.2.0/evidence-gate-v0.1.3.zip)
 
 ## Why this exists
 
@@ -114,9 +114,9 @@ Each project README also has commands for running its extracted standalone ZIP.
 
 ## Downloads
 
-The [v0.1.3 release](../../releases/tag/reliable-ai-lab-v0.1.3) contains ZIPs for all thirteen projects, the complete lab, a Python wheel and SHA-256 checksums.
+The [v0.2.0 release](../../releases/tag/reliable-ai-lab-v0.2.0) contains ZIPs for all thirteen projects, the complete lab, a Python wheel and SHA-256 checksums.
 
-[Complete source ZIP](../../releases/download/reliable-ai-lab-v0.1.3/reliable-ai-lab-v0.1.3.zip) · [Recorded demo gallery](../../releases/download/reliable-ai-lab-v0.1.3/reliable-ai-lab-demo-gallery.html)
+[Complete source ZIP](../../releases/download/reliable-ai-lab-v0.2.0/reliable-ai-lab-v0.2.0.zip) · [Recorded demo gallery](../../releases/download/reliable-ai-lab-v0.2.0/reliable-ai-lab-demo-gallery.html)
 
 The HTML gallery shows saved results. It does not run Python. Use the local browser app to compute results from your own inputs.
 
@@ -128,6 +128,17 @@ python -m build --wheel
 python scripts/package.py
 python scripts/check_downloads.py
 ```
+
+## Run the reproducible benchmark
+
+The first benchmark harness covers deterministic grounding and retrieval regression scenarios:
+
+```bash
+python -m reliable_ai_lab benchmark
+python -m reliable_ai_lab benchmark --output benchmark-results.json
+```
+
+The shipped cases are synthetic regression fixtures, not production performance estimates. See [Benchmarks](docs/BENCHMARKS.md).
 
 ## Use your own data
 
