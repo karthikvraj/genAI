@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "Please cite the software version used in your work."
 title: "Reliable AI Lab"
-version: 0.1.3
+version: 0.2.0
 type: software
 authors:
   - family-names: "Coimbatore Varadaraj"
