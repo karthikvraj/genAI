@@ -1,10 +1,11 @@
 cff-version: 1.2.0
 message: "Please cite the software version used in your work."
 title: "Reliable AI Lab"
-version: 0.1.1
+version: 0.1.3
 type: software
 authors:
   - family-names: "Coimbatore Varadaraj"
     given-names: "Karthik"
 repository-code: "https://github.com/karthikvraj/reliable-ai-lab"
 license: MIT
+url: "https://github.com/karthikvraj/reliable-ai-lab"
