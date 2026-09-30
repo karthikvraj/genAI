@@ -2,13 +2,13 @@
 
 ## Project introduction
 
-I've published Reliable AI Lab, a collection of ten Python projects covering output checks, retrieval, agent plans and infrastructure reliability.
+I've published Reliable AI Lab, an open-source reliability engineering toolkit with thirteen Python projects covering output checks, retrieval, agent plans and infrastructure reliability.
 
 The focus is what happens when something goes wrong. An answer changes a number in its source. A plan includes an action that should not run. A service loses capacity. A dataset shifts.
 
 Each project has code, tests and an example you can run locally. The examples use synthetic data, and the default demos do not need an API key or GPU.
 
-Start with Evidence Gate, Repair Agent or Inference Twin. Try a different input and let me know where the result falls short.
+Start with Evidence Gate for grounding reliability, Repair Agent for agent reliability, or Inference Twin for AI infrastructure reliability. Try a different input and let me know where the result falls short.
 
 ## Demo notes
 
