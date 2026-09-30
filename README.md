@@ -25,7 +25,7 @@ In the [Evidence Gate demo](projects/evidence-gate), a cited source says the cac
 python -m reliable_ai_lab demo evidence-gate
 ```
 
-[View the recorded demo gallery](../../releases/download/reliable-ai-lab-v0.2.0/reliable-ai-lab-demo-gallery.html) · [Download the Evidence Gate project](../../releases/download/reliable-ai-lab-v0.2.0/evidence-gate-v0.1.3.zip)
+[View the recorded demo gallery](../../releases/download/reliable-ai-lab-v0.2.0/reliable-ai-lab-demo-gallery.html) · [Download the Evidence Gate project](../../releases/download/reliable-ai-lab-v0.2.0/evidence-gate-v0.2.0.zip)
 
 ## Why this exists
 
@@ -69,6 +69,24 @@ python -m reliable_ai_lab serve
 ```
 
 Open `http://127.0.0.1:8765`. On Windows, activate the environment with `.venv\Scripts\activate`.
+
+## Build your own reliability test
+
+Reliable AI Lab is designed to be extended, not just read.
+
+**Fork the repository** and contribute one focused improvement:
+
+- add a synthetic failure scenario that exposes a reliability gap;
+- implement a metric or detector with explicit assumptions;
+- add a framework or local-model adapter without changing the local-first defaults;
+- contribute a benchmark case with expected behavior and a regression test; or
+- improve documentation around a failure mode you can reproduce.
+
+A strong contribution includes the smallest useful implementation, a test that would fail without the change, and documentation that explains both the result and its limitations.
+
+Start with a [good first issue](../../issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) or browse [help wanted](../../issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22). See [CONTRIBUTING.md](CONTRIBUTING.md) for the fork → branch → test → pull-request workflow.
+
+If you find a case where a check gives the wrong result, a small reproducible counterexample is especially valuable. Please use synthetic, licensed, or otherwise shareable data—not employer, customer, credential, or private material.
 
 ## Flagship reliability tracks
 
