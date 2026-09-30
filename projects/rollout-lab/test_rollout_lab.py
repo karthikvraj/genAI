@@ -43,6 +43,20 @@ class RolloutLabTests(unittest.TestCase):
         changed["policy"] = dict(reversed(list(changed["policy"].items())))
         self.assertEqual(app.evaluate(self.data)["input_sha256"], app.evaluate(changed)["input_sha256"])
 
+    def test_one_latency_outlier_does_not_trip_the_p95_guardrail(self):
+        data = json.loads((ROOT / "noisy-sample.json").read_text())
+        report = app.evaluate(data)
+        noisy_window = report["windows"][1]
+        self.assertEqual(report["decision"], "PROMOTION_CANDIDATE")
+        self.assertEqual(noisy_window["status"], "CLEAN")
+        latencies = data["windows"][1]["canary"]["latency_ms"]
+        self.assertEqual(len(latencies), 20)
+        self.assertEqual(max(latencies), 300)
+        self.assertLess(
+            noisy_window["p95_latency_ratio"],
+            data["policy"]["max_p95_ratio"],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
