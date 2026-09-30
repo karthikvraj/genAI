@@ -14,7 +14,7 @@ def reject_nonfinite(value):
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Reproducible AI reliability experiments; no production actions.")
     sub = parser.add_subparsers(dest="command", required=True)
-    sub.add_parser("list", help="List the ten projects")
+    sub.add_parser("list", help="List registered projects")\n    bench = sub.add_parser("benchmark", help="Run deterministic synthetic regression benchmarks")\n    bench.add_argument("--output", type=Path)
     for name in ["demo", "sample", "run"]:
         command = sub.add_parser(name)
         command.add_argument("project", choices=list(PROJECTS))
