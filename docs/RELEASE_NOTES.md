@@ -1,10 +1,24 @@
-# Reliable AI Lab v0.1.3
+# Reliable AI Lab v0.2.0
 
-Adds two independently runnable, synthetic-data projects:
+This release adds the first machine-readable **Reliable AI benchmark harness** and completes the first productization pass.
 
-- **Prompt Boundary** scores saved agent traces for unauthorized tool calls, literal synthetic marker leakage, and benign task completion. It does not run or defend a model.
-- **Rollout Lab** checks staged baseline and canary windows using error-rate Wilson intervals and sampled latency guardrails. It recommends review or rollback but never changes live traffic.
+## Benchmark harness
 
-Both projects include documented input formats, limitations, sample traces, and focused tests. The main CI suite runs their command-line examples. The release includes standalone ZIPs for both, plus the previous eleven project ZIPs, full source ZIP, wheel, recorded gallery, manifest, and SHA-256 checksums. Extracted archives are tested before publication.
+- Adds deterministic synthetic regression scenarios for **grounding reliability** and **retrieval reliability**.
+- Produces versioned JSON with per-case expected/observed outcomes and aggregate pass counts.
+- Adds `python -m reliable_ai_lab benchmark` with optional `--output`.
+- Keeps benchmark claims deliberately narrow: the included fixtures are regression scenarios, not estimates of production accuracy.
 
-Results are illustrative and based on synthetic examples; neither project establishes production safety or model security. v0.1.2 remains available and unchanged.
+## Adoption and contributor readiness
+
+- Repositions the project as a reliability-engineering toolkit for AI systems.
+- Adds roadmap, benchmark policy, adopter-evidence policy and package-publishing guidance.
+- Adds contributor issue forms, pull-request checklist and code of conduct.
+- Corrects citation metadata and launch documentation.
+- Keeps archived notebooks from defining the active repository language.
+
+## Distribution
+
+The GitHub release includes project ZIPs, the complete source bundle, Python wheel, recorded gallery, manifest and SHA-256 checksums. A separate manual PyPI Trusted Publishing workflow is prepared but requires the repository owner to configure the PyPI Trusted Publisher before first use.
+
+All included benchmark data is synthetic or hand-authored. Passing the included fixtures does not establish production safety, security, accuracy or reliability.

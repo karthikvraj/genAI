@@ -24,6 +24,7 @@ jobs:
           python-version: ${{ matrix.python }}
       - run: python -m pip install -e '.[dev]'
       - run: python -m pytest --junitxml=docs/test-results.xml
+      - run: python -m reliable_ai_lab benchmark --output docs/benchmark-results.json
       - run: python -m build --wheel
       - run: python scripts/package.py
       - run: python scripts/check_downloads.py
@@ -34,6 +35,7 @@ jobs:
             dist/*
             docs/test-results.xml
             docs/standalone-test-results.json
+            docs/benchmark-results.json
           if-no-files-found: error
   release:
     needs: verify
@@ -62,5 +64,5 @@ jobs:
           if gh release view "$tag" >/dev/null 2>&1; then
             echo "Release $tag already exists; leaving its assets unchanged."
           else
-            gh release create "$tag" release-build/dist/* --target "$COMMIT" --prerelease --title "Reliable AI Lab v${version}" --notes-file docs/RELEASE_NOTES.md
+            gh release create "$tag" release-build/dist/* --target "$COMMIT" --title "Reliable AI Lab v${version}" --notes-file docs/RELEASE_NOTES.md
           fi

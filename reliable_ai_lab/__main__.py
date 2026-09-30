@@ -1,4 +1,4 @@
-"""CLI: python -m reliable_ai_lab demo evidence-gate."""
+"""CLI for Reliable AI Lab."""
 from __future__ import annotations
 import argparse
 import json
@@ -14,7 +14,9 @@ def reject_nonfinite(value):
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Reproducible AI reliability experiments; no production actions.")
     sub = parser.add_subparsers(dest="command", required=True)
-    sub.add_parser("list", help="List the ten projects")
+    sub.add_parser("list", help="List registered projects")
+    bench = sub.add_parser("benchmark", help="Run deterministic synthetic regression benchmarks")
+    bench.add_argument("--output", type=Path)
     for name in ["demo", "sample", "run"]:
         command = sub.add_parser(name)
         command.add_argument("project", choices=list(PROJECTS))
@@ -29,6 +31,9 @@ def main(argv=None):
     try:
         if args.command == "list":
             result = PROJECTS
+        elif args.command == "benchmark":
+            from .benchmark import run_benchmarks
+            result = run_benchmarks()
         elif args.command == "serve":
             from .server import serve
             serve(args.port)
