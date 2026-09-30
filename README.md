@@ -158,6 +158,10 @@ python -m reliable_ai_lab benchmark --output benchmark-results.json
 
 The shipped cases are synthetic regression fixtures, not production performance estimates. See [Benchmarks](docs/BENCHMARKS.md).
 
+## Downstream CI example
+
+The [copyable GitHub Actions example](docs/examples/reliable-ai-lab-downstream-ci.yml) installs the v0.2.0 source tag, runs a deterministic synthetic Evidence Gate check, and uploads its JSON result. Its optional failure step is a project-specific example, not a universal reliability policy.
+
 ## Use your own data
 
 ```bash
