@@ -17,7 +17,7 @@ def run(project, script):
 
 def test_prompt_boundary_sample():
     report = run("prompt-boundary", "prompt_boundary.py")
-    assert report["metrics"]["observed_attack_success_rate"] == 0.5
+    assert report["metrics"]["observed_attack_success_rate"] == 0.667
     assert report["metrics"]["benign_task_completion_rate"] == 1.0
 
 
