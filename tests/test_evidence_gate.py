@@ -16,6 +16,38 @@ def test_numeric_evidence_is_literal():
     assert r['unmatched_numbers'] == ['600']
     assert '60 seconds' in r['evidence']['quote']
 
+@pytest.mark.parametrize(('claim', 'evidence'), [
+    ('The cache time to live is 1 minute.', 'The cache time to live is 60 seconds.'),
+    ('The cache time to live is 1 hour.', 'The cache time to live is 60 minutes.'),
+])
+def test_equivalent_time_units_do_not_raise_numeric_review(claim, evidence):
+    result = m.check_claim(claim, [{'id': 'cache', 'text': evidence}], ['cache'])
+    assert result['status'] == 'lexically_supported'
+    assert result['unmatched_numbers'] == []
+    assert result['claim'] == claim
+    assert result['evidence']['quote'] == evidence
+
+
+def test_changed_time_quantity_still_needs_review():
+    result = m.check_claim(
+        'The cache time to live is 2 minutes.',
+        [{'id': 'cache', 'text': 'The cache time to live is 60 seconds.'}],
+        ['cache'],
+    )
+    assert result['status'] == 'numeric_review'
+    assert result['unmatched_numbers'] == ['2']
+
+
+def test_unrecognized_time_units_are_not_converted():
+    result = m.check_claim(
+        'The cache time to live is 1 day.',
+        [{'id': 'cache', 'text': 'The cache time to live is 1 hour.'}],
+        ['cache'],
+    )
+    assert result['status'] == 'numeric_review'
+    assert result['unmatched_numbers'] == ['1']
+
+
 def test_unrelated_never_passes_even_at_zero_threshold():
     assert m.check_claim('zebras galaxies',demo_sources(),['queue'],0)['status'] == 'insufficient_evidence'
 

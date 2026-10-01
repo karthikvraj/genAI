@@ -1,10 +1,35 @@
 """Claim-to-source checking. Lexical screening, NOT semantic truth verification."""
 from __future__ import annotations
 import re
+from decimal import Decimal
 from .common import documents, text, number, lexical_index, sentences, demo_sources
 
-_NUMBERS = re.compile(r"(?<!\w)-?\d+(?:\.\d+)?%?")
+_QUANTITIES = re.compile(
+    r"(?<!\w)(?P<number>-?\d+(?:\.\d+)?%?)(?:\s+(?P<unit>seconds?|minutes?|hours?)\b)?",
+    re.I,
+)
+_TIME_SECONDS = {
+    "second": Decimal("1"),
+    "seconds": Decimal("1"),
+    "minute": Decimal("60"),
+    "minutes": Decimal("60"),
+    "hour": Decimal("3600"),
+    "hours": Decimal("3600"),
+}
 _NEGATION = re.compile(r"\b(no|not|never|without|cannot)\b", re.I)
+
+
+def _numeric_values(value: str) -> list[tuple[str, tuple[str, Decimal | str]]]:
+    result = []
+    for match in _QUANTITIES.finditer(value):
+        number_text = match.group("number")
+        unit = match.group("unit")
+        if unit and not number_text.endswith("%"):
+            normalized = ("time", Decimal(number_text) * _TIME_SECONDS[unit.lower()])
+        else:
+            normalized = ("number", number_text)
+        result.append((number_text, normalized))
+    return result
 
 
 def check_claim(claim: str, sources: list[dict], source_ids: list[str],
@@ -26,7 +51,9 @@ def check_claim(claim: str, sources: list[dict], source_ids: list[str],
     best = int(scores.argmax())
     ident, evidence = candidates[best]
     score = float(scores[best])
-    absent_numbers = sorted(set(_NUMBERS.findall(claim)) - set(_NUMBERS.findall(evidence)))
+    evidence_numbers = {normalized for _, normalized in _numeric_values(evidence)}
+    absent_numbers = sorted({number_text for number_text, normalized in _numeric_values(claim)
+                             if normalized not in evidence_numbers})
     negation_mismatch = bool(_NEGATION.search(claim)) != bool(_NEGATION.search(evidence))
     if score <= 0 or score < threshold:
         status = "insufficient_evidence"
@@ -58,7 +85,8 @@ def run(payload: dict) -> dict:
                         "needs_review": len(results) - supported},
             "claims": results,
             "limitations": ["Similarity is not a probability of truth.",
-                            "Numbers and negations are heuristic checks; paraphrases, units, entities and multi-hop claims can be misclassified.",
+                            "Numeric comparison normalizes only full singular/plural spellings of seconds, minutes and hours; abbreviations, bare values and other units are not converted.",
+                            "Numbers and negations are heuristic checks; paraphrases, unsupported or ambiguous units, entities and multi-hop claims can be misclassified.",
                             "A passing lexical check must not authorize a consequential action."]}
 
 

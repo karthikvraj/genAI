@@ -18,8 +18,8 @@ from reliable_ai_lab.registry import PROJECTS, get_project
 
 DETAILS = {
 'evidence-gate': ('LLM answers can cite real documents while introducing unsupported numbers or claims.',
- 'Resolve citations, split cited text into sentences, rank lexical overlap, and flag unmatched numbers and negation changes. Keep the exact supporting excerpt.',
- 'Replace lexical screening with a separately evaluated entailment model; add multilingual, unit-conversion and adversarial datasets.',
+ 'Resolve citations, split cited text into sentences, rank lexical overlap, normalize recognized time quantities to seconds, and flag unmatched numbers and negation changes. Keep the exact supporting excerpt.',
+ 'Replace lexical screening with a separately evaluated entailment model; expand time-unit coverage and add multilingual and adversarial datasets.',
  ['sources: unique id/text records','claims: text plus source_ids','threshold: lexical similarity cutoff, default 0.35'],
  'Try changing 128 requests to 256 requests, removing a citation, or reversing a negation.'),
 'budget-rag': ('A fixed number of retrieved chunks can exceed a context budget or repeat the same information.',
