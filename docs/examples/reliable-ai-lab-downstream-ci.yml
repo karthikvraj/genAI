@@ -19,8 +19,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Install Reliable AI Lab v0.2.0 from its source tag
-        run: python -m pip install "git+https://github.com/karthikvraj/reliable-ai-lab.git@reliable-ai-lab-v0.2.0"
+      - name: Install Reliable AI Lab v0.2.1 from its source tag
+        run: python -m pip install "git+https://github.com/karthikvraj/reliable-ai-lab.git@reliable-ai-lab-v0.2.1"
       - name: Run a deterministic synthetic check
         run: python -m reliable_ai_lab demo evidence-gate --output reliable-ai-lab-result.json
       - name: Upload the JSON result
