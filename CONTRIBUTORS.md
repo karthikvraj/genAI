@@ -18,7 +18,17 @@ Merged contributions:
   - Added regression coverage for the existing p95 rollout guardrail behavior.
   - Updated documentation to explain why the sample remains a promotion candidate under the stated fixture policy.
 
-Both contributions were reviewed, validated through the repository test/build/package workflow, and merged into `main`.
+- [#26 — Add a downstream GitHub Actions example](https://github.com/karthikvraj/reliable-ai-lab/pull/26)
+  - Added a copyable, read-only downstream CI example pinned to a released version.
+  - Demonstrated deterministic Evidence Gate execution and JSON artifact upload.
+  - Kept any downstream failure policy explicit and opt-in.
+
+- [#27 — Evidence Gate: compare equivalent time quantities](https://github.com/karthikvraj/reliable-ai-lab/pull/27)
+  - Added normalization for full singular/plural spellings of seconds, minutes and hours.
+  - Preserved the original claim and evidence while reducing false review flags for equivalent time quantities.
+  - Added regression coverage for equivalent conversions, changed quantities and unsupported units.
+
+These contributions were reviewed, validated through the repository test/build/package workflow, and merged into `main`.
 
 ## How credits are maintained
 
