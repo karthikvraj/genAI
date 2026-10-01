@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "kv-reliable-ai-lab"
-version = "0.2.0"
+version = "0.2.1"
 description = "Reliability engineering toolkit for LLMs, RAG, AI agents, model drift, GPU telemetry and inference systems"
 readme = "README.md"
 requires-python = ">=3.10"
