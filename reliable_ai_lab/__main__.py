@@ -17,6 +17,9 @@ def main(argv=None):
     sub.add_parser("list", help="List registered projects")
     bench = sub.add_parser("benchmark", help="Run deterministic synthetic regression benchmarks")
     bench.add_argument("--output", type=Path)
+    tour = sub.add_parser("tour", help="Run three flagship AI failure demos")
+    tour.add_argument("--seed", type=int, default=7)
+    tour.add_argument("--output", type=Path)
     for name in ["demo", "sample", "run"]:
         command = sub.add_parser(name)
         command.add_argument("project", choices=list(PROJECTS))
@@ -34,6 +37,9 @@ def main(argv=None):
         elif args.command == "benchmark":
             from .benchmark import run_benchmarks
             result = run_benchmarks()
+        elif args.command == "tour":
+            from .tour import run_tour
+            result = run_tour(args.seed)
         elif args.command == "serve":
             from .server import serve
             serve(args.port)
