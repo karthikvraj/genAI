@@ -15,7 +15,27 @@ Reliable AI Lab contains thirteen independently runnable projects for testing wh
 
 **No API key or GPU is required for the default demos.**
 
-[Download v0.2.1](../../releases/tag/reliable-ai-lab-v0.2.1) · [Try the demos](#try-it-in-60-seconds) · [Architecture](docs/ARCHITECTURE.md) · [Validation](docs/VALIDATION.md)
+[Download v0.2.1](../../releases/tag/reliable-ai-lab-v0.2.1) · [Run the Reliability Tour](#run-the-reliability-tour) · [Try the demos](#try-it-in-60-seconds) · [Architecture](docs/ARCHITECTURE.md) · [Validation](docs/VALIDATION.md)
+
+## Pick a failure
+
+| Failure you want to explore | What the lab deliberately breaks | Start here |
+|---|---|---|
+| **Grounding failure** | A cited answer changes **60 seconds → 600 seconds**, loses a citation, or reverses a negation | [Evidence Gate](projects/evidence-gate) |
+| **Agent-plan failure** | A plan invents a source, requests an unsupported action, and skips human approval | [Repair Agent](projects/repair-agent) |
+| **Inference-capacity failure** | A serving pool loses capacity while offered load stays constant | [Inference Twin](projects/inference-twin) |
+| **Prompt-boundary failure** | A saved agent trace contains an unauthorized tool call or synthetic marker leak | [Prompt Boundary](projects/prompt-boundary) |
+| **Rollout failure** | A canary window regresses against baseline error or latency guardrails | [Rollout Lab](projects/rollout-lab) |
+
+## Run the Reliability Tour
+
+Want the fastest overview? Run three flagship failure scenarios with one command:
+
+```bash
+python -m reliable_ai_lab tour
+```
+
+The tour runs **grounding**, **agent**, and **AI-infrastructure** examples and returns a compact JSON summary with the observed decision, the failure signal, and what to change next. It uses synthetic fixtures and executes no production actions.
 
 ### See a failure before installing
 
