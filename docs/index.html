@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="A browser-based mini challenge for exploring grounding, agent-plan, and inference-capacity failures from Reliable AI Lab.">
+<title>AI Failure Lab · Reliable AI Lab</title>
+<style>
+:root{--bg:#071017;--panel:#0e1a24;--panel2:#111f2b;--line:#253746;--text:#eef6fb;--muted:#9cb1c1;--green:#8ef0c3;--amber:#ffd27a;--red:#ff9b94;--blue:#8bc7ff;--shadow:0 24px 70px rgba(0,0,0,.28)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 15% 0%,#153044 0,transparent 35%),var(--bg);color:var(--text);font:15px/1.6 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+a{color:inherit}.wrap{max-width:1180px;margin:auto;padding:0 22px}header{display:flex;justify-content:space-between;align-items:center;padding:22px 0}.brand{font-size:12px;font-weight:800;letter-spacing:.15em}.brand b{background:var(--green);color:#052016;padding:8px 10px;border-radius:9px;margin-right:10px}.nav{display:flex;gap:10px;flex-wrap:wrap}.pill{border:1px solid var(--line);padding:7px 11px;border-radius:999px;text-decoration:none;color:var(--muted);font-size:12px}.hero{padding:68px 0 38px}.eyebrow{text-transform:uppercase;letter-spacing:.17em;color:var(--green);font-size:11px;font-weight:800}.hero h1{font-size:clamp(42px,7vw,82px);line-height:.98;letter-spacing:-.055em;margin:14px 0 24px;max-width:900px}.hero h1 span{color:var(--green)}.lead{max-width:760px;color:var(--muted);font-size:18px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.btn{appearance:none;border:0;border-radius:10px;padding:11px 15px;font-weight:750;text-decoration:none;cursor:pointer}.primary{background:var(--green);color:#062117}.secondary{border:1px solid var(--line);background:#0b151e;color:var(--text)}.note{margin-top:18px;color:var(--muted);font-size:12px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:36px 0 18px}.card{background:linear-gradient(180deg,var(--panel),#0a151e);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow);min-width:0}.card h2{font-size:22px;margin:8px 0 4px;letter-spacing:-.025em}.card p{color:var(--muted);margin:0 0 18px}.tag{display:inline-flex;gap:8px;align-items:center;font-size:10px;text-transform:uppercase;letter-spacing:.13em;color:var(--blue)}.field{margin:13px 0}.field label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:6px}.field input,.field select{width:100%;background:#08121a;border:1px solid var(--line);color:var(--text);padding:11px;border-radius:9px;outline:none}.field input:focus,.field select:focus{border-color:var(--green)}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.check{display:flex;gap:9px;align-items:flex-start;color:var(--muted);font-size:13px;margin:11px 0}.result{margin-top:16px;border:1px solid var(--line);border-radius:12px;padding:14px;background:#08121a}.decision{font-weight:850;letter-spacing:.06em;font-size:12px}.ok{color:var(--green)}.warn{color:var(--amber)}.bad{color:var(--red)}.metric{font-size:28px;font-weight:850;letter-spacing:-.03em;margin:5px 0}.small{color:var(--muted);font-size:12px}.code{margin:32px 0;background:#08121a;border:1px solid var(--line);border-radius:16px;padding:20px}.code-top{display:flex;justify-content:space-between;gap:12px;align-items:center}.code pre{overflow:auto;margin:12px 0 0;color:#cbe2f1;font:13px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace}.copy{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:8px;padding:7px 10px;cursor:pointer}.truth{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:32px 0}.truth>div{border-top:2px solid var(--green);padding:14px 0;color:var(--muted)}.truth b{display:block;color:var(--text);margin-bottom:4px}.footer{padding:46px 0 56px;color:var(--muted);font-size:12px;display:flex;justify-content:space-between;gap:20px}.sr{position:absolute;left:-9999px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}.truth{grid-template-columns:1fr}.hero{padding-top:35px}.row{grid-template-columns:1fr}.footer{display:block}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brand"><b>KV</b>RELIABLE AI LAB</div>
+  <nav class="nav">
+    <a class="pill" href="https://github.com/karthikvraj/reliable-ai-lab">GitHub</a>
+    <a class="pill" href="https://github.com/karthikvraj/reliable-ai-lab/releases/tag/reliable-ai-lab-v0.2.1">v0.2.1</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero">
+  <div class="eyebrow">Browser challenge · no signup · no API key</div>
+  <h1>Break the happy path.<br><span>See what catches it.</span></h1>
+  <p class="lead">Three tiny challenges from Reliable AI Lab. Change one input and watch a narrow reliability guardrail react. This page is client-side and educational; the full Python projects contain the actual implementations, tests, benchmarks, and limitations.</p>
+  <div class="actions">
+    <a class="btn primary" href="#challenges">Start the challenge ↓</a>
+    <a class="btn secondary" href="https://github.com/karthikvraj/reliable-ai-lab">View all 13 projects</a>
+    <a class="btn secondary" href="https://github.com/karthikvraj/reliable-ai-lab/releases/download/reliable-ai-lab-v0.2.1/evidence-gate-v0.2.1.zip">Download Evidence Gate</a>
+  </div>
+  <div class="note">No analytics or tracking are embedded in this page. Inputs stay in your browser.</div>
+</section>
+
+<section id="challenges" class="grid">
+<article class="card">
+  <div class="tag">01 · Grounding</div>
+  <h2>Can the citation support the number?</h2>
+  <p>The source says the cache TTL is <b>60 seconds</b>. Change the generated claim.</p>
+  <div class="row">
+    <div class="field"><label for="claimValue">Claim value</label><input id="claimValue" type="number" value="600" min="0"></div>
+    <div class="field"><label for="claimUnit">Unit</label><select id="claimUnit"><option>seconds</option><option>minutes</option><option>hours</option></select></div>
+  </div>
+  <label class="check"><input id="hasCitation" type="checkbox" checked> Include the cache source citation</label>
+  <label class="check"><input id="reverseNegation" type="checkbox"> Reverse a negation in the claim</label>
+  <div class="result" aria-live="polite">
+    <div id="evidenceDecision" class="decision warn">NUMERIC REVIEW</div>
+    <div id="evidenceMetric" class="metric">600 ≠ 60s</div>
+    <div id="evidenceDetail" class="small">The cited source exists, but the claim introduces an unsupported quantity.</div>
+  </div>
+</article>
+
+<article class="card">
+  <div class="tag">02 · Agent plan</div>
+  <h2>Would you let this plan continue?</h2>
+  <p>The plan must cite known evidence, use an allowed action, and require human approval.</p>
+  <div class="field"><label for="sourceId">Source</label><select id="sourceId"><option value="invented-source">invented-source</option><option value="gpu">gpu</option></select></div>
+  <div class="field"><label for="actionName">Action</label><select id="actionName"><option value="restart_cluster">restart_cluster</option><option value="inspect_metrics">inspect_metrics</option><option value="request_human_review">request_human_review</option></select></div>
+  <label class="check"><input id="approval" type="checkbox"> Human approval required</label>
+  <div class="result" aria-live="polite">
+    <div id="agentDecision" class="decision warn">VALIDATION BLOCKED</div>
+    <div id="agentMetric" class="metric">3 issues</div>
+    <div id="agentDetail" class="small">Invalid source · unsupported action · approval missing. The full Repair Agent performs bounded repair and executes zero actions.</div>
+  </div>
+</article>
+
+<article class="card">
+  <div class="tag">03 · Inference capacity</div>
+  <h2>What happens when servers disappear?</h2>
+  <p>This browser preview shows offered utilization. The Python Inference Twin adds queue simulation and a held-out surrogate model.</p>
+  <div class="row">
+    <div class="field"><label for="arrival">Arrival req/s</label><input id="arrival" type="number" value="160" min="1"></div>
+    <div class="field"><label for="service">Mean service ms</label><input id="service" type="number" value="40" min="1"></div>
+  </div>
+  <div class="row">
+    <div class="field"><label for="servers">Servers</label><input id="servers" type="number" value="8" min="1"></div>
+    <div class="field"><label for="lost">Lost servers</label><input id="lost" type="number" value="3" min="0"></div>
+  </div>
+  <div class="result" aria-live="polite">
+    <div id="capacityDecision" class="decision warn">CAPACITY DEGRADED</div>
+    <div id="capacityMetric" class="metric">0.80 → 1.28</div>
+    <div id="capacityDetail" class="small">The post-loss offered utilization is at or above 1.0, so a steady state is not possible under these assumptions.</div>
+  </div>
+</article>
+</section>
+
+<section class="code">
+  <div class="code-top">
+    <div><div class="eyebrow">Run the real implementations</div><strong>One command, three flagship failure modes.</strong></div>
+    <button class="copy" id="copyCommand">Copy command</button>
+  </div>
+  <pre id="tourCommand">git clone https://github.com/karthikvraj/reliable-ai-lab.git
+cd reliable-ai-lab
+python -m pip install -e '.[dev]'
+python -m reliable_ai_lab tour</pre>
+</section>
+
+<section class="truth">
+  <div><b>Inspectable</b>The repository shows the methods, fixtures, tests, assumptions, and failure cases instead of hiding them behind a hosted API.</div>
+  <div><b>Failure-first</b>The examples deliberately start with bad citations, unsafe plans, capacity loss, drift, prompt-boundary failures, and rollout regressions.</div>
+  <div><b>Narrow claims</b>Synthetic examples demonstrate behavior. They are not production benchmarks or proof that a system is safe.</div>
+</section>
+</main>
+
+<footer class="footer">
+  <span>Reliable AI Lab · Karthik Coimbatore Varadaraj</span>
+  <span>MIT licensed · synthetic teaching fixtures · no employer/customer data</span>
+</footer>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const time={seconds:1,minutes:60,hours:3600};
+function evidence(){
+  const cited=$('hasCitation').checked, neg=$('reverseNegation').checked;
+  const value=Number($('claimValue').value||0), unit=$('claimUnit').value;
+  const normalized=value*time[unit];
+  let d,m,t,cls;
+  if(!cited){d='UNCITED';m='no source';t='A claim without a source cannot pass the citation check.';cls='bad'}
+  else if(neg){d='NEGATION REVIEW';m='meaning flipped';t='The wording reverses a negation relative to the cited source.';cls='warn'}
+  else if(normalized!==60){d='NUMERIC REVIEW';m=value+' '+unit+' ≠ 60s';t='The cited source exists, but the claim introduces an unsupported quantity.';cls='warn'}
+  else{d='LEXICAL CHECKS PASSED';m=value+' '+unit+' = 60s';t='For this narrow teaching fixture, the recognized time quantity matches the cited evidence.';cls='ok'}
+  $('evidenceDecision').textContent=d;$('evidenceDecision').className='decision '+cls;$('evidenceMetric').textContent=m;$('evidenceDetail').textContent=t;
+}
+function agent(){
+  const errors=[];
+  if($('sourceId').value!=='gpu')errors.push('invalid source');
+  if(!['inspect_metrics','request_human_review'].includes($('actionName').value))errors.push('unsupported action');
+  if(!$('approval').checked)errors.push('approval missing');
+  const ok=errors.length===0;
+  $('agentDecision').textContent=ok?'READY FOR HUMAN REVIEW':'VALIDATION BLOCKED';
+  $('agentDecision').className='decision '+(ok?'ok':'warn');
+  $('agentMetric').textContent=ok?'0 validation issues':errors.length+' issue'+(errors.length===1?'':'s');
+  $('agentDetail').textContent=ok?'The plan shape passes these browser checks. It still requires human review and no action is executed.':errors.join(' · ')+'. The full Repair Agent performs bounded repair and executes zero actions.';
+}
+function capacity(){
+  const a=Math.max(0,Number($('arrival').value||0)),s=Math.max(.001,Number($('service').value||0));
+  const n=Math.max(1,Math.floor(Number($('servers').value||1))),lost=Math.max(0,Math.min(n-1,Math.floor(Number($('lost').value||0))));
+  const before=a*s/(1000*n),after=a*s/(1000*(n-lost));
+  $('capacityMetric').textContent=before.toFixed(2)+' → '+after.toFixed(2);
+  const unstable=after>=1;
+  $('capacityDecision').textContent=unstable?'NO STEADY STATE':'CAPACITY DEGRADED';
+  $('capacityDecision').className='decision '+(unstable?'bad':lost?'warn':'ok');
+  $('capacityDetail').textContent=unstable?'The post-loss offered utilization is at or above 1.0, so a steady state is not possible under these assumptions.':lost?'Capacity fell, but offered utilization remains below 1.0. Run the Python simulation to inspect queue latency.':'No servers are lost in this preview.';
+}
+['claimValue','claimUnit','hasCitation','reverseNegation'].forEach(id=>$(id).addEventListener('input',evidence));
+['sourceId','actionName','approval'].forEach(id=>$(id).addEventListener('input',agent));
+['arrival','service','servers','lost'].forEach(id=>$(id).addEventListener('input',capacity));
+$('copyCommand').onclick=async()=>{try{await navigator.clipboard.writeText($('tourCommand').textContent);$('copyCommand').textContent='Copied';setTimeout(()=>$('copyCommand').textContent='Copy command',1500)}catch(e){$('copyCommand').textContent='Select + copy'}};
+evidence();agent();capacity();
+</script>
+</body>
+</html>
